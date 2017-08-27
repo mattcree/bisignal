@@ -55,4 +55,5 @@ config :bisignal, Bisignal.Repo,
   password: "postgres",
   database: "bisignal_dev",
   hostname: "localhost",
-  pool_size: 10
+  pool_size: 10,
+  types: Bisignal.PostgresTypes

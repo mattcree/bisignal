@@ -42,7 +42,9 @@ defmodule Bisignal.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:phauxth, "~> 1.0"},
-      {:bcrypt_elixir, "~> 0.12"}
+      {:bcrypt_elixir, "~> 0.12"},
+      {:geo, "~> 2.0"},
+      {:geo_postgis, "~> 1.0"}
     ]
   end
 

@@ -1,0 +1,5 @@
+<h2>Edit Waypoint</h2>
+
+<%= render "form.html", Map.put(assigns, :action, waypoint_path(@conn, :update, @waypoint)) %>
+
+<span><%= link "Back", to: waypoint_path(@conn, :index) %></span>

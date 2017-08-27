@@ -19,6 +19,9 @@ defmodule BisignalWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController
+    resources "/route_details", RouteDetailController
+    resources "/waypoints", WaypointController
+    resources "/participants", ParticipantController
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
 

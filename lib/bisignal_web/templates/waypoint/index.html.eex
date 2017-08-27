@@ -1,0 +1,28 @@
+<h2>Listing Waypoints</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Waypoint number</th>
+      <th>Waypoint</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for waypoint <- @waypoints do %>
+    <tr>
+      <td><%= waypoint.waypoint_number %></td>
+      <td><%= waypoint.waypoint %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: waypoint_path(@conn, :show, waypoint), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: waypoint_path(@conn, :edit, waypoint), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: waypoint_path(@conn, :delete, waypoint), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Waypoint", to: waypoint_path(@conn, :new) %></span>
