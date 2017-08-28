@@ -18,8 +18,12 @@ defmodule BisignalWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController
+    resources "/users", UserController do
+      post "/route_details", RouteDetailController, :new
+    end
+
     resources "/route_details", RouteDetailController
+
     resources "/waypoints", WaypointController
     resources "/participants", ParticipantController
     resources "/sessions", SessionController, only: [:new, :create, :delete]

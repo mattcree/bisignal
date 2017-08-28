@@ -4,6 +4,7 @@ defmodule BisignalWeb.RouteDetailController do
   import BisignalWeb.Authorize
   alias Bisignal.Ride
   alias Bisignal.Ride.RouteDetail
+  alias Bisignal.Accounts.User
 
   plug :user_check when action in [:index, :show]
   plug :id_check when action in [:edit, :update, :delete]
@@ -19,7 +20,8 @@ defmodule BisignalWeb.RouteDetailController do
   end
 
   def create(conn, %{"route_detail" => route_detail_params}) do
-    case Ride.create_route_detail(route_detail_params) do
+    assoc_user = Map.put(route_detail_params, "user_id", conn.assigns.current_user.id)
+    case Ride.create_route_detail(assoc_user) do
       {:ok, route_detail} ->
         conn
         |> put_flash(:info, "Route detail created successfully.")

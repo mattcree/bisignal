@@ -1,22 +1,6 @@
 <h2>Show Route detail</h2>
 
 <ul>
-
-  <li>
-    <strong>Start:</strong>
-    <%= @route_detail.start %>
-  </li>
-
-  <li>
-    <strong>End:</strong>
-    <%= @route_detail.end %>
-  </li>
-
-  <li>
-    <strong>Datetime:</strong>
-    <%= @route_detail.datetime %>
-  </li>
-
   <li>
     <strong>Name:</strong>
     <%= @route_detail.name %>
@@ -26,6 +10,33 @@
     <strong>Description:</strong>
     <%= @route_detail.description %>
   </li>
+
+  <li>
+    <strong>Start Name:</strong>
+    <%= @route_detail.start_name %>
+  </li>
+
+  <li>
+    <strong>Start Coordinates:</strong>
+    <%= inspect @route_detail.start %>
+  </li>
+
+  <li>
+    <strong>End Name:</strong>
+    <%= @route_detail.end_name %>
+  </li>
+
+  <li>
+    <strong>End Coordinates:</strong>
+    <%= inspect @route_detail.end %>
+  </li>
+
+  <li>
+    <strong>Datetime:</strong>
+    <%= @route_detail.datetime %>
+  </li>
+
+
 
 </ul>
 

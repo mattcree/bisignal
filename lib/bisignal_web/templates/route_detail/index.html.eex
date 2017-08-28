@@ -1,25 +1,29 @@
-<h2>Listing Route details</h2>
+<h2>All Rides</h2>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Start</th>
-      <th>End</th>
-      <th>Datetime</th>
       <th>Name</th>
       <th>Description</th>
-
+      <th>Start Name</th>
+      <th>Start</th>
+      <th>End Name</th>
+      <th>End</th>
+      <th>Datetime</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for route_detail <- @route_details do %>
     <tr>
-      <td><%= route_detail.start %></td>
-      <td><%= route_detail.end %></td>
-      <td><%= route_detail.datetime %></td>
       <td><%= route_detail.name %></td>
       <td><%= route_detail.description %></td>
+      <td><%= route_detail.start_name %></td>
+      <td><%= inspect route_detail.start %></td>
+      <td><%= route_detail.end_name %></td>
+      <td><%= inspect route_detail.end %></td>
+      <td><%= route_detail.datetime %></td>
+
 
       <td class="text-right">
         <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-default btn-xs" %></span>

@@ -9,16 +9,19 @@ defmodule Bisignal.Ride.RouteDetail do
     field :description, :string
     field :datetime, :utc_datetime
     field :start, Geo.Geometry
+    field :start_name, :string
     field :end, Geo.Geometry
-    field :organiser_id, :id
+    field :end_name, :string
+    belongs_to :user, Bisignal.Accounts.User
 
     timestamps()
   end
 
   @doc false
   def changeset(%RouteDetail{} = route_detail, attrs) do
+    IO.inspect attrs
     route_detail
-    |> cast(attrs, [:start, :end, :datetime, :name, :description])
-    |> validate_required([:start, :end, :datetime, :name, :description])
+    |> cast(attrs, [:start, :start_name, :end, :end_name, :datetime, :name, :description, :user_id])
+    |> validate_required([:start, :end, :datetime, :name, :description, :user_id])
   end
 end
