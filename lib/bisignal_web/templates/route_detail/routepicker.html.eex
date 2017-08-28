@@ -1,9 +1,9 @@
     <input id="origin-input" class="controls" type="text"
-        placeholder="Enter an origin location">
+        placeholder="Enter Ride starting point">
     <input id="destination-input" class="controls" type="text"
-        placeholder="Enter a destination location">
+        placeholder="Enter Ride destination">
     
-    <div id="map" style="clear:both; height:200px;"></div> 
+    <div id="map" style="clear:both; height:30em"></div> 
     
     
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
