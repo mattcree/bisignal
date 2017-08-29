@@ -6,9 +6,7 @@
       <th>Name</th>
       <th>Description</th>
       <th>Start Name</th>
-      <th>Start</th>
       <th>End Name</th>
-      <th>End</th>
       <th>Datetime</th>
       <th></th>
     </tr>
@@ -19,9 +17,7 @@
       <td><%= route_detail.name %></td>
       <td><%= route_detail.description %></td>
       <td><%= route_detail.start_name %></td>
-      <td><%= inspect route_detail.start %></td>
       <td><%= route_detail.end_name %></td>
-      <td><%= inspect route_detail.end %></td>
       <td><%= route_detail.datetime %></td>
 
 

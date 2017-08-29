@@ -11,14 +11,13 @@
     <%= @route_detail.description %>
   </li>
 
+  <input type="hidden" id="start" value="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>" />
+  <input type="hidden" id="end" value="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" />
+  <div id="map" style="clear:both; height:30em"></div>
+
   <li>
     <strong>Start Name:</strong>
     <%= @route_detail.start_name %>
-  </li>
-
-  <li>
-    <strong>Start Coordinates:</strong>
-    <%= inspect @route_detail.start %>
   </li>
 
   <li>
@@ -27,18 +26,16 @@
   </li>
 
   <li>
-    <strong>End Coordinates:</strong>
-    <%= inspect @route_detail.end %>
-  </li>
-
-  <li>
     <strong>Datetime:</strong>
     <%= @route_detail.datetime %>
   </li>
-
-
 
 </ul>
 
 <span><%= link "Edit", to: route_detail_path(@conn, :edit, @route_detail) %></span>
 <span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
+    async defer></script>
+<link rel="stylesheet" href="/css/routepicker.css">
+<script src="/js/displayroute.js"></script>
