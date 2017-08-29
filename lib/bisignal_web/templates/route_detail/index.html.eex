@@ -31,4 +31,4 @@
   </tbody>
 </table>
 
-<span><%= link "New Route detail", to: route_detail_path(@conn, :new) %></span>
+<span><%= link "Add New Ride", to: route_detail_path(@conn, :new) %></span>

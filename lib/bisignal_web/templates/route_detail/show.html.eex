@@ -1,4 +1,4 @@
-<h2>Show Route detail</h2>
+<h2>Ride Details</h2>
 
 <ul>
   <li>
@@ -11,9 +11,12 @@
     <%= @route_detail.description %>
   </li>
 
-  <input type="hidden" id="start" value="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>" />
-  <input type="hidden" id="end" value="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" />
+  <div id="coords" 
+    data-start="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>"
+    data-end="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" 
+  />
   <div id="map" style="clear:both; height:30em"></div>
+
 
   <li>
     <strong>Start Name:</strong>

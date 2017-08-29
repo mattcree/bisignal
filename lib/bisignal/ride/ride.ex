@@ -17,6 +17,21 @@ defmodule Bisignal.Ride do
       [%RouteDetail{}, ...]
 
   """
+  def list_users_routes(user_id) do
+
+    query = from ride in RouteDetail, where: ride.user_id == ^user_id
+    Repo.all(query)
+  end
+
+    @doc """
+  Returns the list of route_details associated with a user.
+
+  ## Examples
+
+      iex> list_route_details()
+      [%RouteDetail{}, ...]
+
+  """
   def list_route_details do
     Repo.all(RouteDetail)
   end

@@ -1,4 +1,4 @@
-<h2>Edit Route detail</h2>
+<h2>Edit Ride</h2>
 
 <%= render "form.html", Map.put(assigns, :action, route_detail_path(@conn, :update, @route_detail)) %>
 

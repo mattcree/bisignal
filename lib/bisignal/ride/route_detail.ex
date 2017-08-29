@@ -19,7 +19,6 @@ defmodule Bisignal.Ride.RouteDetail do
 
   @doc false
   def changeset(%RouteDetail{} = route_detail, attrs) do
-    IO.inspect attrs
     route_detail
     |> cast(attrs, [:start, :start_name, :end, :end_name, :datetime, :name, :description, :user_id])
     |> validate_required([:start, :end, :datetime, :name, :description, :user_id])

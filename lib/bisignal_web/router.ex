@@ -19,7 +19,7 @@ defmodule BisignalWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController do
-      post "/route_details", RouteDetailController, :new
+      get "/route_details", RouteDetailController, :show_by_user
     end
 
     resources "/route_details", RouteDetailController
