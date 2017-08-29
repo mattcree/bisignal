@@ -12,7 +12,7 @@ defmodule BisignalWeb.RouteDetailController do
 
   def index(conn, _params) do
     route_details = Ride.list_route_details()
-    render(conn, "index.html", route_details: route_details)
+    render(conn, "index.html", route_details: route_details, user: nil)
   end
 
   def new(conn, _params) do
@@ -70,4 +70,13 @@ defmodule BisignalWeb.RouteDetailController do
     |> put_flash(:info, "Route detail deleted successfully.")
     |> redirect(to: route_detail_path(conn, :index))
   end
+
+  def delete_by_user(conn, %{"user_id" => id}) do
+    ride = Ride.get_route_detail!(id)
+    IO.inspect id
+    conn
+    |> put_flash(:info, "Route detail deleted successfully.")
+    |> redirect(to: route_detail_path(conn, :index))
+  end
+
 end

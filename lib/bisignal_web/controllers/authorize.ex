@@ -34,6 +34,8 @@ defmodule BisignalWeb.Authorize do
   end
   def id_check(%Plug.Conn{params: %{"id" => id},
       assigns: %{current_user: current_user}} = conn, _opts) do
+        IO.inspect id
+        IO.inspect current_user.id
     if id == to_string(current_user.id) do
       conn
     else

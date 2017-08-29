@@ -18,7 +18,7 @@ defmodule Bisignal.Ride do
 
   """
   def list_users_routes(user_id) do
-    query = from ride in RouteDetail, where: ride.user_id == ^user_id
+    query = from ride in RouteDetail, where: ride.user_id == ^user_id, order_by: [desc: ride.datetime]
     Repo.all(query)
   end
 
@@ -32,7 +32,8 @@ defmodule Bisignal.Ride do
 
   """
   def list_route_details do
-    Repo.all(RouteDetail)
+    query = from ride in RouteDetail, order_by: [desc: ride.datetime]
+    Repo.all(query)
   end
 
   @doc """

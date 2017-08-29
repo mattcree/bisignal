@@ -21,7 +21,7 @@
     <%= hidden_input f, :start_name, id: "start_name" %>
     <%= hidden_input f, :end_name, id: "end_name" %>
 
-    <%= render "routepicker.html" %>
+    <%= render "routepicker.html", conn: @conn %>
   </div>
   
   <div class="form-group">

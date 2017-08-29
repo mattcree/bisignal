@@ -24,7 +24,7 @@
       <td class="text-right">
         <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-default btn-xs" %></span>
         <span><%= link "Edit", to: route_detail_path(@conn, :edit, route_detail), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: route_detail_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+        <span><%= link "Delete", to: user_route_detail_path(@conn, :delete_by_user, route_detail), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
       </td>
     </tr>
 <% end %>

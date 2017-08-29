@@ -2,11 +2,9 @@
         placeholder="Enter Ride starting point">
     <input id="destination-input" class="controls" type="text"
         placeholder="Enter Ride destination">
-    
     <div id="map" style="clear:both; height:30em"></div> 
     
-    
+    <link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
         async defer></script>
-    <link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
     <script src='<%= static_path(@conn, "/js/routepicker.js") %>'></script>
