@@ -65,7 +65,7 @@ config :logger, level: :info
 #import_config "prod.secret.exs"
 
 # Configure your database
-config :hello, Hello.Repo,
+config :bisignal, Bisignal.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: [scheme: "https", host: "powerful-plateau-56504.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
