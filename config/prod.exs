@@ -70,4 +70,5 @@ config :bisignal, Bisignal.Repo,
   url: [scheme: "https", host: "powerful-plateau-56504.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true
+  ssl: true,
+  types: Bisignal.PostgresTypes
