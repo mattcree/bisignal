@@ -39,8 +39,9 @@ defmodule BisignalWeb.RouteDetailController do
   end
 
   def show_by_user(conn, %{"user_id" => id}) do
+    user = Accounts.get(id)
     route_details = Ride.list_users_routes(id)
-    render(conn, "index.html", route_details: route_details)
+    render(conn, "index.html", route_details: route_details, user: user)
   end
 
   def edit(conn, %{"id" => id}) do

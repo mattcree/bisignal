@@ -18,7 +18,6 @@ defmodule Bisignal.Ride do
 
   """
   def list_users_routes(user_id) do
-
     query = from ride in RouteDetail, where: ride.user_id == ^user_id
     Repo.all(query)
   end
