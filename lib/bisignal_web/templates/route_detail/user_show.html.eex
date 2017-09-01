@@ -14,8 +14,6 @@
 
   <p><strong>Organiser:</strong> <%= link @user.name, to: user_path(@conn, :show, @user), method: :get, class: "btn btn-info btn-xs" %></p>
 
-  <p><span><%= link "Join", to: user_participant_path(@conn, :create, @user, @route_detail), method: :post, data: [confirm: "Want to Join this Ride?"], class: "btn btn-success btn-xs" %></span></p>
-
   <p><span><%= link "Delete", to: user_route_detail_path(@conn, :delete_by_user, @user, @route_detail), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span></p>
 
   <p><span><%= link "Back", to: user_route_detail_path(@conn, :show_by_user, @user) %></span></p>

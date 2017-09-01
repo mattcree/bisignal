@@ -8,7 +8,7 @@ defmodule BisignalWeb.RouteDetailController do
   alias Bisignal.Accounts
   import Ecto.Query, warn: false
 
-  plug :user_check when action in [:index, :show, :new, :user_show]
+  plug :user_check when action in [:new, :user_show]
   plug :user_id_check when action in [:create, :edit, :update, :delete_by_user, :show_by_user]
 
   def index(conn, _params) do
@@ -17,7 +17,6 @@ defmodule BisignalWeb.RouteDetailController do
   end
 
   def new(conn, _params) do
-    IO.inspect "wot"
     changeset = Ride.change_route_detail(%RouteDetail{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -42,8 +41,15 @@ defmodule BisignalWeb.RouteDetailController do
   end
 
   def show(conn, %{"id" => id}) do
-    route_detail = Ride.get_route_detail!(id)
-    render(conn, "show.html", route_detail: route_detail)
+    case Ride.get_route_detail!(id) do
+      nil ->
+        conn
+        |> put_flash(:info, "No Route Found")
+        |> redirect(to: route_detail_path(conn, :index))
+      route_detail ->
+        participants = Ride.get_participant_names(id)
+        render(conn, "show.html", route_detail: route_detail, participants: participants)
+    end
   end
 
   def show_by_user(conn, %{"user_id" => user_id}) do

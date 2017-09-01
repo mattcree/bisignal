@@ -1,8 +1,10 @@
 defmodule BisignalWeb.ParticipantController do
   use BisignalWeb, :controller
-
+  import BisignalWeb.Authorize
   alias Bisignal.Ride
   alias Bisignal.Ride.Participant
+  plug :user_check when action in [:create]
+
 
   # def index(conn, _params) do
   #   participants = Ride.list_participants()
@@ -14,17 +16,18 @@ defmodule BisignalWeb.ParticipantController do
   #   render(conn, "new.html", changeset: changeset)
   # end
  
-  def create(conn, %{"user_id" => user_id, "id" => id}) do
-    participant = %{"user_id" => user_id, "route_id" => id}
+  def create(conn, %{"id" => id}) do
+    current_user = conn.assigns.current_user.id
+    participant = %{"user_id" => current_user, "route_id" => id}
     case Ride.create_participant(participant) do
       {:ok, participant} ->
         conn
-        |> put_flash(:info, "Participant created successfully.")
-        |> redirect(to: user_route_detail_path(conn, :user_show, user_id, id))
+        |> put_flash(:info, "You're now a participant of this ride.")
+        |> redirect(to: route_detail_path(conn, :show, id))
       {:error, %Ecto.Changeset{} = changeset} ->
         conn 
         |> put_flash(:info, "You're already subscribed!")
-        |> redirect(to: user_route_detail_path(conn, :user_show, user_id, id))
+        |> redirect(to: route_detail_path(conn, :show, id))
     end
   end
 

@@ -5,8 +5,9 @@ defmodule Bisignal.Ride do
 
   import Ecto.Query, warn: false
   alias Bisignal.Repo
-
   alias Bisignal.Ride.RouteDetail
+  alias Bisignal.Accounts.User
+
 
   @doc """
   Returns the list of route_details.
@@ -55,7 +56,7 @@ defmodule Bisignal.Ride do
       ** (Ecto.NoResultsError)
 
   """
-  def get_route_detail!(id), do: Repo.get!(RouteDetail, id)
+  def get_route_detail!(id), do: Repo.get(RouteDetail, id)
 
   @doc """
   Creates a route_detail.
@@ -248,6 +249,12 @@ defmodule Bisignal.Ride do
 
   """
   def get_participant!(id), do: Repo.get!(Participant, id)
+
+  def get_participant_names(route_id) do
+    query = from u in User,
+              join: p in Participant, where: u.id==p.user_id and p.route_id==^route_id, select: u.name
+    Repo.all(query)
+  end
 
   @doc """
   Creates a participant.

@@ -22,11 +22,11 @@ defmodule BisignalWeb.Router do
       get "/route_details", RouteDetailController, :show_by_user
       get "/route_details/new", RouteDetailController, :new
       get "/route_details/:id", RouteDetailController, :user_show
-      post "/route_details/:id/join", ParticipantController, :create
       post "/route_details/", RouteDetailController, :create
       delete "/route_details/:id", RouteDetailController, :delete_by_user 
     end
 
+    post "/route_details/:id/join", ParticipantController, :create
     get "/route_details/:id", RouteDetailController, :show
     get "/route_details/", RouteDetailController, :index
 

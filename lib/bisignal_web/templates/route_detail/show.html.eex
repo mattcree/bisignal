@@ -12,6 +12,21 @@
   <p><strong>End Name:</strong> <%= @route_detail.end_name %></p>
 
   <p><strong>Datetime:</strong> <%= @route_detail.datetime %></p>
+  
+  <%= if @current_user do %>
+  <p><span><%= link "Join", to: participant_path(@conn, :create, @route_detail), method: :post, data: [confirm: "Want to Join this Ride?"], class: "btn btn-success btn-xs" %></span></p>
+  <% end %>
+
+  <p><strong>Participants</strong></p>
+  <ul>
+    <%= if Enum.empty?(@participants) do %>
+      <b> None </b>
+    <% else %>
+      <%= for participant <- @participants do %>
+        <li><%= participant %></li>
+      <% end %>
+    <% end %>
+  </ul>
 
 <span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
 

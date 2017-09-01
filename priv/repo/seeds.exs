@@ -6,9 +6,12 @@
 #
 
 users = [
-  %{name: "Ted Bed", bio: "Just a man on a bike", email: "ted@mail.com", password: "password"},
-  %{name: "Ed Shed", bio: "Just bike man", email: "eddiebaby@mail.com", password: "password"}
+  %{name: "Ted Bed", email: "ted@mail.com", password: "password"},
+  %{name: "Ed Shed", email: "eddiebaby@mail.com", password: "password"},
+  %{name: "Jerry Seinfeld", email: "seinfeld@mail.com", password: "password"},
+  %{name: "Bob Saget", email: "seinfeld@mail.com", password: "password"}
 ]
+
 
 for user <- users do
   {:ok, _} = Bisignal.Accounts.create_user(user)
