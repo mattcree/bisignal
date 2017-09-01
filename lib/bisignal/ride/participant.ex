@@ -15,7 +15,9 @@ defmodule Bisignal.Ride.Participant do
   @doc false
   def changeset(%Participant{} = participant, attrs) do
     participant
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:user_id, :route_id])
+    |> validate_required([:user_id, :route_id])
+    |> unique_constraint(:user_id, name: :participant_id)
+    |> foreign_key_constraint(:route_id)
   end
 end

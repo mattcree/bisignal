@@ -18,13 +18,13 @@ defmodule BisignalWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :new, :create, :delete] do
+    resources "/users", UserController, only: [:index, :new, :create, :delete, :show] do
       get "/route_details", RouteDetailController, :show_by_user
       get "/route_details/new", RouteDetailController, :new
       get "/route_details/:id", RouteDetailController, :user_show
+      post "/route_details/:id/join", ParticipantController, :create
       post "/route_details/", RouteDetailController, :create
       delete "/route_details/:id", RouteDetailController, :delete_by_user 
-
     end
 
     get "/route_details/:id", RouteDetailController, :show
