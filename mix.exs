@@ -44,7 +44,8 @@ defmodule Bisignal.Mixfile do
       {:phauxth, "~> 1.0"},
       {:bcrypt_elixir, "~> 0.12"},
       {:geo, "~> 2.0"},
-      {:geo_postgis, "~> 1.0"}
+      {:geo_postgis, "~> 1.0"},
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
     ]
   end
 

@@ -1,45 +1,24 @@
 <h2>Ride Details</h2>
 
-<ul>
-  <li>
-    <strong>Name:</strong>
-    <%= @route_detail.name %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @route_detail.description %>
-  </li>
-
+  <p><strong>Name:</strong> <%= @route_detail.name %></p>
   <div id="coords" 
     data-start="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>"
     data-end="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" 
   />
   <div id="map" style="clear:both; height:30em"></div>
 
+  <p><strong>Start Name:</strong> <%= @route_detail.start_name %></p>
 
-  <li>
-    <strong>Start Name:</strong>
-    <%= @route_detail.start_name %>
-  </li>
+  <p><strong>End Name:</strong> <%= @route_detail.end_name %></p>
 
-  <li>
-    <strong>End Name:</strong>
-    <%= @route_detail.end_name %>
-  </li>
+  <p><strong>Datetime:</strong> <%= @route_detail.datetime %></p>
 
-  <li>
-    <strong>Datetime:</strong>
-    <%= @route_detail.datetime %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: route_detail_path(@conn, :edit, @route_detail) %></span>
 <span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
+
+<link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
 <script src='<%= static_path(@conn, "/js/displayroute.js") %>'></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
     async defer></script>
 
-<link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
+
 

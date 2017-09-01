@@ -2,16 +2,13 @@
 
 <ul>
   <li>
-    <strong>Bio:</strong>
-    <%= @user.bio %>
-  </li>
-  <li>
   <strong>Email:</strong>
     <%= @user.email %>
   </li>
-
 </ul>
 
-<span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Show Rides", to: user_route_detail_path(@conn, :show_by_user, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<p>
+<span><%= link "Show Rides", to: user_route_detail_path(@conn, :show_by_user, @user) %></span></p>
+<script>
+    document.write('<a href="' + document.referrer + '">Back</a>');
+</script>

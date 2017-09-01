@@ -1,0 +1,36 @@
+<h2>All Rides</h2>
+
+
+<%= if Enum.empty?(@route_details) do %>
+<b> No Rides found. </b>
+<% else %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Datetime</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for route_detail <- @route_details do %>
+    <tr>
+      <td><%= route_detail.name %></td>
+      <td><%= route_detail.start_name %></td>
+      <td><%= route_detail.end_name %></td>
+      <td><%= route_detail.datetime %></td>
+
+
+      <td class="text-right">
+        <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-default btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<% end %>
+
+
+

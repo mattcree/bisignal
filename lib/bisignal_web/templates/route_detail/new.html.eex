@@ -1,5 +1,5 @@
 <h2>Add New Ride</h2>
 
-<%= render "form.html", Map.put(assigns, :action, route_detail_path(@conn, :create)) %>
+<%= render "form.html", Map.put(assigns, :action, user_route_detail_path(@conn, :create, @current_user)) %>
 
-<span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
+<span><%= link "Back", to: user_route_detail_path(@conn, :show_by_user, @current_user) %></span>

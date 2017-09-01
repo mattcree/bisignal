@@ -5,7 +5,6 @@ defmodule Bisignal.Accounts.User do
 
   schema "users" do
     field :name, :string
-    field :bio, :string
     field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
@@ -16,7 +15,7 @@ defmodule Bisignal.Accounts.User do
 
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :name, :bio])
+    |> cast(attrs, [:email, :password, :name])
     |> validate_required([:email, :name])
     |> unique_constraint(:email)
   end

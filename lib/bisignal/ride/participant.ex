@@ -7,6 +7,7 @@ defmodule Bisignal.Ride.Participant do
   schema "participants" do
     field :user_id, :id
     field :route_id, :id
+    field :location, Geo.Geometry
 
     timestamps()
   end

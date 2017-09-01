@@ -1,8 +1,0 @@
-<h2>Show Participant</h2>
-
-<ul>
-
-</ul>
-
-<span><%= link "Edit", to: participant_path(@conn, :edit, @participant) %></span>
-<span><%= link "Back", to: participant_path(@conn, :index) %></span>

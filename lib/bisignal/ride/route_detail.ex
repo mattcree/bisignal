@@ -6,7 +6,6 @@ defmodule Bisignal.Ride.RouteDetail do
 
   schema "route_details" do
     field :name, :string
-    field :description, :string
     field :datetime, :utc_datetime
     field :start, Geo.Geometry
     field :start_name, :string
@@ -20,7 +19,7 @@ defmodule Bisignal.Ride.RouteDetail do
   @doc false
   def changeset(%RouteDetail{} = route_detail, attrs) do
     route_detail
-    |> cast(attrs, [:start, :start_name, :end, :end_name, :datetime, :name, :description, :user_id])
-    |> validate_required([:start, :end, :datetime, :name, :description, :user_id])
+    |> cast(attrs, [:start, :start_name, :end, :end_name, :datetime, :name, :user_id])
+    |> validate_required([:start, :end, :datetime, :name, :user_id])
   end
 end

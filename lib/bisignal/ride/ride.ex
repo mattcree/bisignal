@@ -22,6 +22,11 @@ defmodule Bisignal.Ride do
     Repo.all(query)
   end
 
+  def get_users_ride(user_id, id) do
+    query = from ride in RouteDetail, where: ride.user_id == ^user_id and ride.id == ^id, order_by: [desc: ride.datetime]
+    Repo.one!(query)
+  end
+
     @doc """
   Returns the list of route_details associated with a user.
 

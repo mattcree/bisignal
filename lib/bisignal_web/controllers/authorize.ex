@@ -32,13 +32,25 @@ defmodule BisignalWeb.Authorize do
   def id_check(%Plug.Conn{assigns: %{current_user: nil}} = conn, _opts) do
     error(conn, "You need to log in to view this page", session_path(conn, :new))
   end
+
   def id_check(%Plug.Conn{params: %{"id" => id},
       assigns: %{current_user: current_user}} = conn, _opts) do
-        IO.inspect id
-        IO.inspect current_user.id
     if id == to_string(current_user.id) do
       conn
     else
+      error(conn, "You are not authorized to view this page", user_path(conn, :index))
+    end
+  end
+
+    def user_id_check(%Plug.Conn{params: %{"user_id" => id},
+      assigns: %{current_user: current_user}} = conn, _opts) do
+    if id == to_string(current_user.id) do
+      IO.inspect id
+      IO.inspect current_user.id
+      IO.inspect "it's working"
+      conn
+    else
+      IO.inspect "it didn't work"
       error(conn, "You are not authorized to view this page", user_path(conn, :index))
     end
   end

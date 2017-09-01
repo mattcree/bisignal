@@ -5,6 +5,7 @@ defmodule Bisignal.Repo.Migrations.CreateParticipants do
     create table(:participants) do
       add :user_id, references(:users, on_delete: :nothing)
       add :route_id, references(:route_details, on_delete: :nothing)
+      add :location, :geometry
 
       timestamps()
     end
