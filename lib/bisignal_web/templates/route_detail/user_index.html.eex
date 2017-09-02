@@ -31,5 +31,5 @@
 </table>
 <% end %>
 
-<p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user) %></span></p>
+<p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success btn-xs" %></span></p>
 

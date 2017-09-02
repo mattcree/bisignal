@@ -19,7 +19,8 @@
     <div class="container">
       <header class="header">
         <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
+          <span class="logo"><h1 class="logo navbar-brand">BiSignal</h1></span>
+          <ul class="navbar nav nav-pills pull-right">
             <li><a href="<%= page_path @conn, :index %>">Home</a></li>
               <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
               <%= if @current_user do %>
@@ -33,7 +34,6 @@
               <% end %>
           </ul>
         </nav>
-        <span class="logo"></span>
       </header>
 
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
