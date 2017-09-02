@@ -25,7 +25,7 @@ defmodule Bisignal.Ride do
 
   def get_users_route_detail(user_id, id) do
     query = from ride in RouteDetail, where: ride.user_id == ^user_id and ride.id == ^id, order_by: [desc: ride.datetime]
-    Repo.one!(query)
+    Repo.one(query)
   end
 
     @doc """
@@ -253,6 +253,11 @@ defmodule Bisignal.Ride do
   def get_participant_names(route_id) do
     query = from u in User,
               join: p in Participant, where: u.id==p.user_id and p.route_id==^route_id, select: u.name
+    Repo.all(query)
+  end
+
+  def get_participant_by_route_and_user(user_id, route_id) do
+    query = from p in Participant, where: p.user_id==^user_id and p.route_id==^route_id
     Repo.all(query)
   end
 

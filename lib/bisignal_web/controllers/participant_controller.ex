@@ -55,12 +55,18 @@ defmodule BisignalWeb.ParticipantController do
   #   end
   # end
 
-  # def delete(conn, %{"id" => id}) do
-  #   participant = Ride.get_participant!(id)
-  #   {:ok, _participant} = Ride.delete_participant(participant)
-
-  #   conn
-  #   |> put_flash(:info, "Participant deleted successfully.")
-  #   |> redirect(to: participant_path(conn, :index))
-  # end
+  def delete(conn, %{"id" => route_id}) do
+    current_user = conn.assigns.current_user.id
+    case Ride.get_participant_by_route_and_user(current_user, route_id) do
+      [] ->
+        conn 
+        |> put_flash(:info, "You weren't subscribed!")
+        |> redirect(to: route_detail_path(conn, :show, route_id))
+      [record] ->
+        Ride.delete_participant(record)
+        conn
+        |> put_flash(:info, "You're no longer a participant in this Ride.")
+        |> redirect(to: route_detail_path(conn, :show, route_id))
+    end
+  end
 end

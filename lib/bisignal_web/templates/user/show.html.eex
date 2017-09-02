@@ -7,8 +7,6 @@
   </li>
 </ul>
 
-<p>
-<span><%= link "Show Rides", to: user_route_detail_path(@conn, :show_by_user, @user) %></span></p>
 <script>
     document.write('<a href="' + document.referrer + '">Back</a>');
 </script>

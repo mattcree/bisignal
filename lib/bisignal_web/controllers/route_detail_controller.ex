@@ -2,11 +2,12 @@ defmodule BisignalWeb.RouteDetailController do
   use BisignalWeb, :controller
 
   import BisignalWeb.Authorize
+  import Ecto.Query, warn: false
+
   alias Bisignal.Ride
   alias Bisignal.Ride.RouteDetail
   alias Bisignal.Accounts.User
   alias Bisignal.Accounts
-  import Ecto.Query, warn: false
 
   plug :user_check when action in [:new, :user_show]
   plug :user_id_check when action in [:create, :edit, :update, :delete_by_user, :show_by_user]
@@ -35,9 +36,16 @@ defmodule BisignalWeb.RouteDetailController do
   end
 
   def user_show(conn, %{"user_id" => user_id,"id" => id}) do
-    route_detail = Ride.get_route_detail!(id)
-    user = Accounts.get(user_id)
-    render(conn, "user_show.html", route_detail: route_detail, user: user)
+    case Ride.get_users_route_detail(user_id, id) do
+      nil ->
+        conn
+        |> put_flash(:info, "No Route Found")
+        |> redirect(to: page_path(conn, :index))
+      route_detail ->
+        user = Accounts.get(user_id)
+        participants = Ride.get_participant_names(id)
+        render(conn, "user_show.html", route_detail: route_detail, participants: participants, user: user)
+    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -65,5 +73,4 @@ defmodule BisignalWeb.RouteDetailController do
     |> put_flash(:info, "Route detail deleted successfully.")
     |> redirect(to: user_route_detail_path(conn, :show_by_user, user_id))
   end
-
 end

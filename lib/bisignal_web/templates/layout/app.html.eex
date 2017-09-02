@@ -9,7 +9,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
-    <title>Welcome to Phauxth - an extensible authentication library for Elixir web apps</title>
+    <title>BiSignal</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     
   </head>
@@ -21,9 +21,9 @@
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
             <li><a href="<%= page_path @conn, :index %>">Home</a></li>
-              <li><a href="<%= user_path @conn, :index %>">Users</a></li>
               <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
               <%= if @current_user do %>
+              <li><a href="<%= user_path @conn, :index %>">Users</a></li>
               <li><a href="<%= user_route_detail_path @conn, :show_by_user, @current_user %>">My Rides</a></li>
               <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
               <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
@@ -40,12 +40,12 @@
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
       <main role="main">
-
-
         <%= render @view_module, @view_template, assigns %>
       </main>
-
     </div> <!-- /container -->
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
   </body>
+
+
 </html>

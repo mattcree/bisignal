@@ -27,8 +27,11 @@ defmodule BisignalWeb.Router do
     end
 
     post "/route_details/:id/join", ParticipantController, :create
+    delete "/route_details/:id/leave", ParticipantController, :delete
     get "/route_details/:id", RouteDetailController, :show
     get "/route_details/", RouteDetailController, :index
+
+
 
     resources "/sessions", SessionController, only: [:new, :create, :delete]
   end
