@@ -10,42 +10,58 @@
     <meta charset="utf-8">
 
     <title>BiSignal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+
+
     
   </head>
 
   <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand">BiSignal</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="<%= page_path @conn, :index %>">Home</a></li>
+            <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
+            <%= if @current_user do %>
+            <li><a href="<%= user_path @conn, :index %>">Users</a></li>
+            <li><a href="<%= user_route_detail_path @conn, :show_by_user, @current_user %>">My Rides</a></li>
+            <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
+            <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+            <% else %>
+            <li><a href="<%= user_path @conn, :new %>">New user</a></li>
+            <li><a href="<%= session_path @conn, :new %>">Login</a></li>
+            <% end %>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
 
     <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <span class="logo"><h1 class="logo navbar-brand">BiSignal</h1></span>
-          <ul class="navbar nav nav-pills pull-right">
-            <li><a href="<%= page_path @conn, :index %>">Home</a></li>
-              <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
-              <%= if @current_user do %>
-              <li><a href="<%= user_path @conn, :index %>">Users</a></li>
-              <li><a href="<%= user_route_detail_path @conn, :show_by_user, @current_user %>">My Rides</a></li>
-              <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
-              <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
-              <% else %>
-              <li><a href="<%= user_path @conn, :new %>">New user</a></li>
-              <li><a href="<%= session_path @conn, :new %>">Login</a></li>
-              <% end %>
-          </ul>
-        </nav>
-      </header>
-
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
-
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-
+        <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+                crossorigin="anonymous">
+        </script>
   </body>
-
-
 </html>

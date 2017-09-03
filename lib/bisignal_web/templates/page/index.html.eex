@@ -1,4 +1,23 @@
 <div class="jumbotron">
-  <h2>Get ready TO RIDE.</h2>
-  <p class="lead">There'll be a map here or wotever</p>
+
+<p>Your Location</p>
+<div id="mapholder"></div>
+<button onclick="getLocation()">Get Map</button>
 </div>
+
+<script>
+	var x = document.getElementById("locate");
+	function getLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(showPosition);
+	    } else {
+	        x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+	}
+	function showPosition(position) {
+	    var latlon = position.coords.latitude + "," + position.coords.longitude;
+	    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+	    +latlon+"&zoom=14&size=400x300&key=AIzaSyCCG6QtBPAjDH6qfZYca-Eok2xojAV6Wg4";
+	    document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+	}
+</script>
