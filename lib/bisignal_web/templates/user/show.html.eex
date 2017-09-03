@@ -2,10 +2,53 @@
 
 <ul>
   <li>
+  <strong>Name:</strong>
+    <%= @user.name %>
+  </li>
+  <li>
   <strong>Email:</strong>
     <%= @user.email %>
   </li>
+    <li>
+  <strong>Member since:</strong>
+    <%= @user.inserted_at %>
+  </li>
 </ul>
+
+<h2>Rides Organised</h2>
+
+<%= if Enum.empty?(@route_details) do %>
+<h3> No Rides found. </h3>
+<% else %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Datetime</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for route_detail <- @route_details do %>
+    <tr>
+      <td><%= route_detail.name %></td>
+      <td><%= route_detail.start_name %></td>
+      <td><%= route_detail.end_name %></td>
+      <td><%= route_detail.datetime %></td>
+
+
+      <td class="text-right">
+        <span><%= link "Show", to: user_route_detail_path(@conn, :user_show, @user, route_detail), class: "btn btn-default btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<% end %>
+
+<p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success btn-xs" %></span></p>
 
 <script>
     document.write('<a href="' + document.referrer + '">Back</a>');

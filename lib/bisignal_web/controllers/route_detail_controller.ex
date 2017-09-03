@@ -71,6 +71,6 @@ defmodule BisignalWeb.RouteDetailController do
     {:ok, _route_detail} = Ride.delete_route_detail(route_detail)
     conn
     |> put_flash(:info, "Route detail deleted successfully.")
-    |> redirect(to: user_route_detail_path(conn, :show_by_user, user_id))
+    |> redirect(to: user_path(conn, :show, user_id))
   end
 end

@@ -3,13 +3,15 @@ defmodule BisignalWeb.ParticipantController do
   import BisignalWeb.Authorize
   alias Bisignal.Ride
   alias Bisignal.Ride.Participant
-  plug :user_check when action in [:create]
+
+  plug :user_check when action in [:create, :delete, :show_by_user]
+  plug :user_id_check when action in [:show_by_user]
 
 
-  # def index(conn, _params) do
-  #   participants = Ride.list_participants()
-  #   render(conn, "index.html", participants: participants)
-  # end
+  def show_by_user(conn, %{"user_id" => id}) do
+    route_details = Ride.get_participation_by_user(id)
+    render(conn, "index.html", route_details: route_details)
+  end
 
   # def new(conn, _params) do
   #   changeset = Ride.change_participant(%Participant{})

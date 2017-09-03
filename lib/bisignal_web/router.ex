@@ -24,6 +24,8 @@ defmodule BisignalWeb.Router do
       get "/route_details/:id", RouteDetailController, :user_show
       post "/route_details/", RouteDetailController, :create
       delete "/route_details/:id", RouteDetailController, :delete_by_user 
+      get "/participation", ParticipantController, :show_by_user
+      get "/participation/:id", ParticipantController, :user_show
     end
 
     post "/route_details/:id/join", ParticipantController, :create

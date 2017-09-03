@@ -3,7 +3,7 @@ defmodule BisignalWeb.UserController do
 
   import BisignalWeb.Authorize
   alias Phauxth.Log
-  alias Bisignal.{Accounts}
+  alias Bisignal.{Accounts, Ride}
 
   plug :user_check when action in [:index, :show]
   plug :id_check when action in [:edit, :update, :delete]
@@ -29,7 +29,8 @@ defmodule BisignalWeb.UserController do
 
   def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
     user = id == to_string(user.id) and user || Accounts.get(id)
-    render(conn, "show.html", user: user)
+    route_details = Ride.list_users_routes(id)
+    render(conn, "show.html", user: user, route_details: route_details)
   end
 
   def edit(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do

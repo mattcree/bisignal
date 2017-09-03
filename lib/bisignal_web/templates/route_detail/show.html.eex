@@ -14,9 +14,15 @@
   <p><strong>Datetime:</strong> <%= @route_detail.datetime %></p>
   
   <%= if @current_user do %>
-  <p><span><%= link "Join", to: participant_path(@conn, :create, @route_detail), method: :post, data: [confirm: "Want to Join this Ride?"], class: "btn btn-success btn-xs" %></span></p>
-  <p><span><%= link "Leave", to: participant_path(@conn, :delete, @route_detail), method: :delete, data: [confirm: "Want to Leave this Ride?"], class: "btn btn-danger btn-xs" %></span></p>
-
+    <%= if @current_user.name in @participants do %>
+      <p><span><%= link "Leave", to: participant_path(@conn, :delete, @route_detail), 
+                                  method: :delete, data: [confirm: "Want to Leave this Ride?"], 
+                                    class: "btn btn-danger btn-xs" %></span></p>
+    <% else %>
+      <p><span><%= link "Join", to: participant_path(@conn, :create, @route_detail), 
+                                  method: :post, data: [confirm: "Want to Join this Ride?"], 
+                                    class: "btn btn-success btn-xs" %></span></p>
+    <% end %>
   <% end %>
 
   <p><strong>Participants</strong></p>

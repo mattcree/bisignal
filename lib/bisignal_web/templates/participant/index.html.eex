@@ -1,0 +1,34 @@
+<%= if Enum.empty?(@route_details) do %>
+<h3> No participation found. </h3>
+<% else %>
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Datetime</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for route_detail <- @route_details do %>
+    <tr>
+      <td class="text-left"><p><span><%= link "Broadcast", to: participant_path(@conn, :delete, route_detail), method: :delete, class: "btn btn-info btn-xs" %></span></p>
+</td>
+      <td><%= route_detail.name %></td>
+      <td><%= route_detail.start_name %></td>
+      <td><%= route_detail.end_name %></td>
+      <td><%= route_detail.datetime %></td>
+
+
+      <td class="text-right">
+        <p><span><%= link "Leave", to: participant_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Want to Leave this Ride?"], class: "btn btn-danger btn-xs" %></span></p>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<% end %>
+

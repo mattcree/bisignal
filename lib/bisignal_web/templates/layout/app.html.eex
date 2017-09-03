@@ -36,9 +36,8 @@
             <li><a href="<%= page_path @conn, :index %>">Home</a></li>
             <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
             <%= if @current_user do %>
-            <li><a href="<%= user_path @conn, :index %>">Users</a></li>
-            <li><a href="<%= user_route_detail_path @conn, :show_by_user, @current_user %>">My Rides</a></li>
-            <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.email %></a></li>
+            <li><a href="<%= user_participant_path @conn, :show_by_user, @current_user %>">Participation</a></li>
+            <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.name %>'s Account</a></li>
             <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
             <% else %>
             <li><a href="<%= user_path @conn, :new %>">New user</a></li>

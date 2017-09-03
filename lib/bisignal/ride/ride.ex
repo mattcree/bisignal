@@ -261,6 +261,12 @@ defmodule Bisignal.Ride do
     Repo.all(query)
   end
 
+  def get_participation_by_user(user_id) do
+    query = from r in RouteDetail,
+              join: p in Participant, where: p.user_id==^user_id and r.id==p.route_id
+    Repo.all(query)
+  end
+
   @doc """
   Creates a participant.
 
