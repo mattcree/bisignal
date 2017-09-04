@@ -1,0 +1,1 @@
+<span><%= link "Back", to: user_participant_path(@conn, :show_by_user, @current_user) %></span>

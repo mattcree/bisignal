@@ -1,4 +1,6 @@
 <div class="jumbotron">
+<div id="messages"></div>
+<input id="chat-input" type="text"></input>
 
 <p>Your Location</p>
 <div id="mapholder"></div>

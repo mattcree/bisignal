@@ -12,7 +12,7 @@ defmodule BisignalWeb.SessionController do
       {:ok, user} ->
         put_session(conn, :user_id, user.id)
         |> configure_session(renew: true)
-        |> success("You have been logged in", user_path(conn, :index))
+        |> success("You have been logged in", user_path(conn, :show, user))
       {:error, message} ->
         error(conn, message, session_path(conn, :new))
     end

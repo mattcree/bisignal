@@ -1,4 +1,9 @@
-<h2><%= @user.name %>'s Info</h2>
+<%= if @user.id == @current_user.id do %>
+  <h2>Your Info</h2>
+<% else %>
+  <h2><%= @user.name %>'s Info</h2>
+<% end %>
+
 
 <ul>
   <li>
@@ -37,8 +42,7 @@
       <td><%= route_detail.start_name %></td>
       <td><%= route_detail.end_name %></td>
       <td><%= route_detail.datetime %></td>
-
-
+      
       <td class="text-right">
         <span><%= link "Show", to: user_route_detail_path(@conn, :user_show, @user, route_detail), class: "btn btn-default btn-xs" %></span>
       </td>
@@ -48,7 +52,9 @@
 </table>
 <% end %>
 
-<p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success btn-xs" %></span></p>
+<%= if @user.id == @current_user.id do %>
+  <p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success btn-xs" %></span></p>
+<% end %>
 
 <script>
     document.write('<a href="' + document.referrer + '">Back</a>');

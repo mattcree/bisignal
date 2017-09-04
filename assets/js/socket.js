@@ -21,14 +21,14 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //       plug :put_user_token
 //     end
 //
-//     defp put_user_token(conn, _) do
-//       if current_user = conn.assigns[:current_user] do
-//         token = Phoenix.Token.sign(conn, "user socket", current_user.id)
-//         assign(conn, :user_token, token)
-//       else
-//         conn
-//       end
-//     end
+    // defp put_user_token(conn, _) do
+    //   if current_user = conn.assigns[:current_user] do
+    //     token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+    //     assign(conn, :user_token, token)
+    //   else
+    //     conn
+    //   end
+    // end
 //
 // Now you need to pass this token to JavaScript. You can do so
 // inside a script tag in "lib/web/templates/layout/app.html.eex":
@@ -37,24 +37,54 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 //
 // You will need to verify the user token in the "connect/2" function
 // in "lib/web/channels/user_socket.ex":
-//
-//     def connect(%{"token" => token}, socket) do
-//       # max_age: 1209600 is equivalent to two weeks in seconds
-//       case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
-//         {:ok, user_id} ->
-//           {:ok, assign(socket, :user, user_id)}
-//         {:error, reason} ->
-//           :error
-//       end
-//     end
+
+    // def connect(%{"token" => token}, socket) do
+    //   # max_age: 1209600 is equivalent to two weeks in seconds
+    //   case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+    //     {:ok, user_id} ->
+    //       {:ok, assign(socket, :user, user_id)}
+    //     {:error, reason} ->
+    //       :error
+    //   end
+    // end
 //
 // Finally, pass the token on connect as below. Or remove it
 // from connect if you don't care about authentication.
 
-socket.connect()
+
 
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel 		  = socket.channel("room:lobby", {})
+let chatInput         = document.querySelector("#chat-input")
+let messagesContainer = document.querySelector("#messages")
+let location
+
+if (socket.params.token != "") {
+	socket.connect()
+	location = navigator.geolocation.watchPosition(success, failure, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+}
+
+function success(position) {
+	channel.push("new_location", {longitude: position.coords.longitude, latitude: position.coords.latitude})
+}
+
+function failure(error) {
+	console.log(error)
+}
+
+chatInput.addEventListener("keypress", event => {
+  if(event.keyCode === 13){
+    channel.push("new_location", {longitude: chatInput.value, latitude: chatInput.value})
+    chatInput.value = ""
+  }
+})
+
+channel.on("new_location", payload => {
+  let messageItem = document.createElement("p");
+  messageItem.innerText = `Longitude:${payload.longitude}, Latitude:${payload.latitude} ${payload}`
+  messagesContainer.appendChild(messageItem)
+})
+
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })

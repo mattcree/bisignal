@@ -14,7 +14,10 @@
 
   <p><strong>Organiser:</strong> <%= link @user.name, to: user_path(@conn, :show, @user), method: :get, class: "btn btn-info btn-xs" %></p>
 
+<%= if @user.id == @current_user.id do %>
   <p><span><%= link "Delete", to: user_route_detail_path(@conn, :delete_by_user, @user, @route_detail), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span></p>
+<% end %>
+
 
   <p><span><%= link "Back", to: user_route_detail_path(@conn, :show_by_user, @user) %></span></p>
 

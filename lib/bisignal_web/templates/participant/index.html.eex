@@ -15,8 +15,8 @@
   <tbody>
 <%= for route_detail <- @route_details do %>
     <tr>
-      <td class="text-left"><p><span><%= link "Broadcast", to: participant_path(@conn, :delete, route_detail), method: :delete, class: "btn btn-info btn-xs" %></span></p>
-</td>
+      <td class="text-left"><p><span><%= link "Broadcast", to: user_participant_path(@conn, :show, @current_user, route_detail), class: "btn btn-info btn-xs" %></span></p>
+  </td>
       <td><%= route_detail.name %></td>
       <td><%= route_detail.start_name %></td>
       <td><%= route_detail.end_name %></td>

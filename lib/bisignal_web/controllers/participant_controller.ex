@@ -13,6 +13,10 @@ defmodule BisignalWeb.ParticipantController do
     render(conn, "index.html", route_details: route_details)
   end
 
+  def show(conn, params) do
+    render(conn, "show.html")
+  end
+
   # def new(conn, _params) do
   #   changeset = Ride.change_participant(%Participant{})
   #   render(conn, "new.html", changeset: changeset)

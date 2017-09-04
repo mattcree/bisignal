@@ -8,6 +8,7 @@ defmodule BisignalWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Phauxth.Authenticate
+    plug :put_user_token
   end
 
   pipeline :api do
@@ -25,17 +26,23 @@ defmodule BisignalWeb.Router do
       post "/route_details/", RouteDetailController, :create
       delete "/route_details/:id", RouteDetailController, :delete_by_user 
       get "/participation", ParticipantController, :show_by_user
-      get "/participation/:id", ParticipantController, :user_show
+      get "/participation/:id", ParticipantController, :show
     end
 
     post "/route_details/:id/join", ParticipantController, :create
     delete "/route_details/:id/leave", ParticipantController, :delete
     get "/route_details/:id", RouteDetailController, :show
     get "/route_details/", RouteDetailController, :index
-
-
-
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+  end
+
+  defp put_user_token(conn, _) do
+    if current_user = conn.assigns[:current_user] do
+      token = Phoenix.Token.sign(conn, "user socket", current_user.id)
+      assign(conn, :user_token, token)
+    else
+      conn
+    end
   end
 
 end

@@ -37,8 +37,6 @@
   </ul>
 
 <span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
-
-<link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
 <script src='<%= static_path(@conn, "/js/displayroute.js") %>'></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
     async defer></script>

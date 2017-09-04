@@ -10,7 +10,7 @@ var waypoints = document.getElementById('waypoints');
 var originInput = document.getElementById('origin-input');
 var destinationInput = document.getElementById('destination-input');
 
-function initMap() {
+function initPickerMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
     center: {lat: 51.5074, lng: 0.1278},
@@ -27,8 +27,6 @@ function AutocompleteDirectionsHandler(map) {
   this.originPlaceId = null;
   this.destinationPlaceId = null;
   this.travelMode = 'BICYCLING'
-
-
 
   this.directionsService = new google.maps.DirectionsService;
   this.directionsService.route({'travelMode': google.maps.DirectionsTravelMode.BICYCLING})
