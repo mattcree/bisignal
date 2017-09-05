@@ -54,36 +54,43 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 
 // Now that you are connected, you can join channels with a topic:
-let channel 		  = socket.channel("room:lobby", {})
-let chatInput         = document.querySelector("#chat-input")
+let channel 		      = socket.channel("participant:" + window.participant_id , {})
 let messagesContainer = document.querySelector("#messages")
+let disconnectButton = document.querySelector("#disconnect")
+let broadcastButton = document.querySelector("#broadcast")
+
 let location
 
 if (socket.params.token != "") {
 	socket.connect()
-	location = navigator.geolocation.watchPosition(success, failure, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
 }
 
 function success(position) {
-	channel.push("new_location", {longitude: position.coords.longitude, latitude: position.coords.latitude})
+  console.log(position.coords.accuracy)
+	channel.push("new_location", {participant: window.participant_id, longitude: position.coords.longitude, latitude: position.coords.latitude, accuracy: position.coords.accuracy})
 }
 
 function failure(error) {
 	console.log(error)
 }
 
-chatInput.addEventListener("keypress", event => {
-  if(event.keyCode === 13){
-    channel.push("new_location", {longitude: chatInput.value, latitude: chatInput.value})
-    chatInput.value = ""
-  }
-})
-
 channel.on("new_location", payload => {
   let messageItem = document.createElement("p");
-  messageItem.innerText = `Longitude:${payload.longitude}, Latitude:${payload.latitude} ${payload}`
+  messageItem.innerText = `Participant: ${payload.participant} Longitude:${payload.longitude}, Latitude:${payload.latitude} accurate to ${payload.accuracy} meters`
   messagesContainer.appendChild(messageItem)
 })
+
+if (disconnectButton != null) {
+  disconnectButton.onclick = function() {
+    navigator.geolocation.clearWatch(location)
+  }
+} 
+
+if (broadcastButton != null) {
+  broadcastButton.onclick = function() {
+    location = navigator.geolocation.watchPosition(success, failure, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
+  }
+}
 
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })

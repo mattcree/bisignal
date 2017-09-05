@@ -2,7 +2,7 @@ defmodule BisignalWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", BisignalWeb.RoomChannel
+  channel "participant:*", BisignalWeb.ParticipantChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket,

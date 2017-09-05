@@ -5,7 +5,7 @@ defmodule BisignalWeb.ParticipantController do
   alias Bisignal.Ride.Participant
 
   plug :user_check when action in [:create, :delete, :show_by_user]
-  plug :user_id_check when action in [:show_by_user]
+  plug :user_id_check when action in [:show_by_user, :show]
 
 
   def show_by_user(conn, %{"user_id" => id}) do
@@ -13,8 +13,17 @@ defmodule BisignalWeb.ParticipantController do
     render(conn, "index.html", route_details: route_details)
   end
 
-  def show(conn, params) do
-    render(conn, "show.html")
+  def show(conn, %{"user_id" => user_id, "id" => id}) do
+    case Ride.get_participant_by_route_and_user(user_id, id) do
+      [] ->
+        conn 
+        |> put_flash(:info, "Participation not found!")
+        |> redirect(to: user_participant_path(conn, :show_by_user, user_id))
+      [participant] ->
+        conn
+        |> put_flash(:info, "Ready to Broadcast")
+        |> render("show.html", participant: participant)
+    end
   end
 
   # def new(conn, _params) do

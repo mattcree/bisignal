@@ -1,1 +1,13 @@
+<div class="jumbotron">
+<button type="button" id="broadcast">Start Broadcasting</button>
+<button type="button" id="disconnect">Stop Broadcasting</button>
+
+<div id="messages"></div>
+
+<div id="mapholder"></div>
+</div>
+
 <span><%= link "Back", to: user_participant_path(@conn, :show_by_user, @current_user) %></span>
+<script>
+  window.participant_id = "<%= @participant.id %>";	
+</script>
