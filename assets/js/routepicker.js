@@ -66,7 +66,6 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(aut
     }
     me.route();
   });
-
 };
 
 AutocompleteDirectionsHandler.prototype.route = function() {
@@ -108,5 +107,4 @@ var saveRoute = function (directionsDisplay) {
     waypoints.value = JSON.stringify(route.waypoints)
     start.value = JSON.stringify(route.start)
     end.value = JSON.stringify(route.end)
-    
 }

@@ -7,6 +7,7 @@ defmodule BisignalWeb.Authorize do
   def auth_action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
     error(conn, "You need to log in to view this page", session_path(conn, :new))
   end
+  
   def auth_action(%Plug.Conn{assigns: %{current_user: current_user},
       params: params} = conn, module) do
     apply(module, action_name(conn), [conn, params, current_user])

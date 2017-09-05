@@ -123,102 +123,6 @@ defmodule Bisignal.Ride do
     RouteDetail.changeset(route_detail, %{})
   end
 
-  alias Bisignal.Ride.Waypoint
-
-  @doc """
-  Returns the list of waypoints.
-
-  ## Examples
-
-      iex> list_waypoints()
-      [%Waypoint{}, ...]
-
-  """
-  def list_waypoints do
-    Repo.all(Waypoint)
-  end
-
-  @doc """
-  Gets a single waypoint.
-
-  Raises `Ecto.NoResultsError` if the Waypoint does not exist.
-
-  ## Examples
-
-      iex> get_waypoint!(123)
-      %Waypoint{}
-
-      iex> get_waypoint!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_waypoint!(id), do: Repo.get!(Waypoint, id)
-
-  @doc """
-  Creates a waypoint.
-
-  ## Examples
-
-      iex> create_waypoint(%{field: value})
-      {:ok, %Waypoint{}}
-
-      iex> create_waypoint(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_waypoint(attrs \\ %{}) do
-    %Waypoint{}
-    |> Waypoint.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a waypoint.
-
-  ## Examples
-
-      iex> update_waypoint(waypoint, %{field: new_value})
-      {:ok, %Waypoint{}}
-
-      iex> update_waypoint(waypoint, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_waypoint(%Waypoint{} = waypoint, attrs) do
-    waypoint
-    |> Waypoint.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Waypoint.
-
-  ## Examples
-
-      iex> delete_waypoint(waypoint)
-      {:ok, %Waypoint{}}
-
-      iex> delete_waypoint(waypoint)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_waypoint(%Waypoint{} = waypoint) do
-    Repo.delete(waypoint)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking waypoint changes.
-
-  ## Examples
-
-      iex> change_waypoint(waypoint)
-      %Ecto.Changeset{source: %Waypoint{}}
-
-  """
-  def change_waypoint(%Waypoint{} = waypoint) do
-    Waypoint.changeset(waypoint, %{})
-  end
-
   alias Bisignal.Ride.Participant
 
   @doc """
@@ -264,6 +168,12 @@ defmodule Bisignal.Ride do
   def get_participation_by_user(user_id) do
     query = from r in RouteDetail,
               join: p in Participant, where: p.user_id==^user_id and r.id==p.route_id
+    Repo.all(query)
+  end
+
+  def get_participants_by_time_since_update(time) when time >= 0 and is_integer(time)  do
+    interval = time - (time * 2)
+    query = from p in Participant, where: p.updated_at > datetime_add(^Ecto.DateTime.utc, ^interval, "minute")
     Repo.all(query)
   end
 

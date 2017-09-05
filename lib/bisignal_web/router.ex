@@ -15,6 +15,13 @@ defmodule BisignalWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/api", BisignalWeb do
+    pipe_through :api
+    get "/participants", ApiController, :participants
+    get "/current", ApiController, :current
+    get "/current/:time", ApiController, :current_by_time
+  end
+
   scope "/", BisignalWeb do
     pipe_through :browser
 

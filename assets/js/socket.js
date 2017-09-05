@@ -56,9 +56,8 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 // Now that you are connected, you can join channels with a topic:
 let channel 		      = socket.channel("participant:" + window.participant_id , {})
 let messagesContainer = document.querySelector("#messages")
-let disconnectButton = document.querySelector("#disconnect")
-let broadcastButton = document.querySelector("#broadcast")
-
+let disconnectButton  = document.querySelector("#disconnect")
+let broadcastButton   = document.querySelector("#broadcast")
 let location
 
 if (socket.params.token != "") {
@@ -75,19 +74,21 @@ function failure(error) {
 }
 
 channel.on("new_location", payload => {
-  let messageItem = document.createElement("p");
-  messageItem.innerText = `Participant: ${payload.participant} Longitude:${payload.longitude}, Latitude:${payload.latitude} accurate to ${payload.accuracy} meters`
-  messagesContainer.appendChild(messageItem)
+  console.log(payload)
 })
 
 if (disconnectButton != null) {
   disconnectButton.onclick = function() {
+    broadcastButton.style.display = ''
+    disconnectButton.style.display = 'none';
     navigator.geolocation.clearWatch(location)
   }
 } 
 
 if (broadcastButton != null) {
   broadcastButton.onclick = function() {
+    disconnectButton.style.display = '';
+    broadcastButton.style.display = 'none';
     location = navigator.geolocation.watchPosition(success, failure, {maximumAge:60000, timeout:5000, enableHighAccuracy:true});
   }
 }

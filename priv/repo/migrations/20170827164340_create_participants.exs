@@ -6,6 +6,7 @@ defmodule Bisignal.Repo.Migrations.CreateParticipants do
       add :user_id, references(:users, on_delete: :delete_all)
       add :route_id, references(:route_details, on_delete: :delete_all)
       add :location, :geometry
+      add :loc_accuracy, :float
 
       timestamps()
     end
