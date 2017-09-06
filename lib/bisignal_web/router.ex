@@ -17,9 +17,14 @@ defmodule BisignalWeb.Router do
 
   scope "/api", BisignalWeb do
     pipe_through :api
-    get "/participants", ApiController, :participants
-    get "/current", ApiController, :current
-    get "/current/:time", ApiController, :current_by_time
+
+    get "/participants_all", ApiController, :participants
+    get "/participants_current", ApiController, :current
+    get "/participants_current/:time", ApiController, :current_by_time
+    get "/participants_near/:lng/:lat", ApiController, :nearby
+    get "/participants_within/:distance/meters_of/:lng/:lat", ApiController, :within_distance
+
+    get "/routes_all", ApiController, :routes
   end
 
   scope "/", BisignalWeb do
@@ -27,11 +32,11 @@ defmodule BisignalWeb.Router do
 
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :new, :create, :delete, :show] do
+      get "/participation", ParticipantController, :show_by_user
+      get "/participation/:id", ParticipantController, :show
       get "/route_details", RouteDetailController, :show_by_user
       get "/route_details/new", RouteDetailController, :new
       get "/route_details/:id", RouteDetailController, :user_show
-      get "/participation", ParticipantController, :show_by_user
-      get "/participation/:id", ParticipantController, :show
       post "/route_details/", RouteDetailController, :create
       delete "/route_details/:id", RouteDetailController, :delete_by_user 
     end

@@ -24,7 +24,13 @@ defmodule Bisignal.Ride.Participant do
   end
 
   def encode_model(geometry) do
-    %Participant{geometry | geo_json: Geo.JSON.encode(geometry.location) }
+    if geometry.location == nil do
+      point = Geo.WKT.decode("POINT(0.0 0.0)")
+      %Participant{geometry | geo_json: Geo.JSON.encode(point)}
+    else
+      IO.inspect geometry
+      %Participant{geometry | geo_json: Geo.JSON.encode(geometry.location)}
+    end
   end
 
   defimpl Poison.Encoder, for: Bisignal.Ride.Participant do
