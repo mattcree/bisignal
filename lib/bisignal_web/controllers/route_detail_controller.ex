@@ -29,7 +29,7 @@ defmodule BisignalWeb.RouteDetailController do
         user = Accounts.get(user_id)
         conn
         |> put_flash(:info, "Route detail created successfully.")
-        |> redirect(to: user_route_detail_path(conn, :user_show, user, route_detail))
+        |> redirect(to: user_route_detail_path(conn, :user_show, user_id, route_detail))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
