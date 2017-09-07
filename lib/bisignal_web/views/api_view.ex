@@ -27,4 +27,12 @@ defmodule BisignalWeb.ApiView do
     routes
   end
 
+  def render("routes_nearby.json", %{route_details: route_details}) do
+    route_details
+  end
+
+  def render("routes_within_distance.json", %{route_details: route_details}) do
+    route_details
+  end
+
 end

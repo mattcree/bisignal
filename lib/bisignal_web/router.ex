@@ -25,6 +25,8 @@ defmodule BisignalWeb.Router do
     get "/participants_within/:distance/meters_of/:lng/:lat", ApiController, :within_distance
 
     get "/routes_all", ApiController, :routes
+    get "/routes_near/:lng/:lat", ApiController, :routes_nearby
+    get "/routes_within/:distance/of/:lng/:lat", ApiController, :routes_within_distance
   end
 
   scope "/", BisignalWeb do

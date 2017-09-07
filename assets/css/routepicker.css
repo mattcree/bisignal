@@ -10,10 +10,16 @@
     position: relative;
 }
 /* Optional: Makes the sample page fill the window. */
-html, body {
+html, body, #mapholder {
   height: 100%;
+  width: 100%;
   padding-top: 2em;
 }
+
+#mapholder {
+  position: relative;
+}
+
 .controls {
   margin-top: 10px;
   border: 1px solid transparent;

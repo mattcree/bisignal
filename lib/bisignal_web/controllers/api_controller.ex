@@ -57,6 +57,31 @@ defmodule BisignalWeb.ApiController do
     end
   end
 
+  def routes_nearby(conn, %{"lng" => lng, "lat" => lat}) do
+    case scrub_lng_lat(lng, lat) do
+      :error ->
+        empty_json(conn)
+      {longitude, latitude} ->
+        route_details = Ride.get_routes_by_distance_from_location(lng, lat, 5000)
+        render(conn, route_details: route_details)
+    end
+  end
+
+  def routes_within_distance(conn, %{"distance" => distance, "lng" => lng, "lat" => lat}) do
+    case Integer.parse(distance) do
+      {dist, ""} ->
+        case scrub_lng_lat(lng, lat) do
+          {longitude, latitude} ->
+            route_details = Ride.get_routes_by_distance_from_location(longitude, latitude, dist)
+            render(conn, route_details: route_details)
+          _ ->
+            empty_json(conn)
+        end
+      _ ->
+        :error
+    end
+  end
+
   def scrub_lng_lat(lng, lat) do
     {longitude, valid_long} = parse_coord(lng, &is_within_range/3, -180.0, 180.0)
     {latitude, valid_lat} = parse_coord(lat, &is_within_range/3, -90.0, 90.0)

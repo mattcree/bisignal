@@ -1,10 +1,18 @@
-<div class="jumbotron">
-<div id="messages"></div>
+<select id="distance" onchange="newApiCall()" class="controls">
+  <option value="1000">1km</option>
+  <option value="3000">3km</option>
+  <option value="5000">5km</option>
+  <option value="7000">7km</option>
+  <option value="10000">10km</option>
+  <option value="15000">15km</option>
+  <option value="20000">20km</option>
+</select>
 
-<div id="mapholder"></div>
-</div>
+<div id="mapholder" style="clear:both; height:30em"></div>
 
-<script>
-	
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="<%= static_path(@conn, "/js/multiroute.js") %>"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
+    async defer></script>
+
 

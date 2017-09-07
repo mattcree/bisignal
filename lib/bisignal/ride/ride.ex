@@ -43,6 +43,14 @@ defmodule Bisignal.Ride do
     Repo.all(query)
   end
 
+  def get_routes_by_distance_from_location(lng, lat, distance) do
+    location = Geo.WKT.decode("POINT(#{lng} #{lat})")
+    query = from route in RouteDetail, 
+            where: st_dwithin_in_meters(route.start, ^location, ^distance) 
+                or st_dwithin_in_meters(route.end, ^location, ^distance)
+    Repo.all(query)
+  end
+
   @doc """
   Gets a single route_detail.
 
