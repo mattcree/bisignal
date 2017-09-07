@@ -6,6 +6,14 @@
   <option value="10000">10km</option>
   <option value="15000">15km</option>
   <option value="20000">20km</option>
+  <option value="50000">50km</option>
+  <option value="100000">100km</option>
+  <option value="200000">200km</option>
+  <option value="500000">500km</option>
+  <option value="1000000">1000km</option>
+  <option value="2500000">2500km</option>
+  <option value="5000000">5000km</option>
+  <option value="10000000">10000km</option>
 </select>
 
 <div id="mapholder" style="clear:both; height:30em"></div>
