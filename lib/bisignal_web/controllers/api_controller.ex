@@ -42,6 +42,16 @@ defmodule BisignalWeb.ApiController do
     end
   end
 
+  def nearby_current(conn, %{"lng" => lng, "lat" => lat}) do
+    case scrub_lng_lat(lng, lat) do
+      :error ->
+        empty_json(conn)
+      {longitude, latitude} ->
+        participants = Ride.get_participants_by_time_since_update_and_location(longitude, latitude, 5, 5000)
+        render(conn, participants: participants)
+    end
+  end
+
   def within_distance(conn, %{"distance" => distance, "lng" => lng, "lat" => lat}) do
     case Integer.parse(distance) do
       {dist, ""} ->
@@ -51,6 +61,26 @@ defmodule BisignalWeb.ApiController do
             render(conn, participants: participants)
           _ ->
             empty_json(conn)
+        end
+      _ ->
+        :error
+    end
+  end
+
+    def within_distance_by_time(conn, %{"distance" => distance, "lng" => lng, "lat" => lat, "time" => time}) do
+    case Integer.parse(distance) do
+      {dist, ""} ->
+        case Integer.parse(time) do
+          {a_time, ""} ->
+            case scrub_lng_lat(lng, lat) do
+              {longitude, latitude} ->
+                participants = Ride.get_participants_by_time_since_update_and_location(longitude, latitude, a_time, dist)
+                render(conn, participants: participants)
+              _ ->
+                empty_json(conn)
+        end
+          _ ->
+            :error
         end
       _ ->
         :error

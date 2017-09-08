@@ -18,11 +18,13 @@ defmodule BisignalWeb.Router do
   scope "/api", BisignalWeb do
     pipe_through :api
 
-    get "/participants_all", ApiController, :participants
-    get "/participants_current", ApiController, :current
-    get "/participants_current/:time", ApiController, :current_by_time
-    get "/participants_near/:lng/:lat", ApiController, :nearby
-    get "/participants_within/:distance/meters_of/:lng/:lat", ApiController, :within_distance
+    get "/participants", ApiController, :participants
+    get "/participants/:time", ApiController, :current_by_time
+    get "/participants_recent", ApiController, :current
+    get "/participants_recent_near/:lng/:lat", ApiController, :nearby_current
+    get "/participants_last_seen_near/:lng/:lat", ApiController, :nearby
+    get "/participants_last_seen/:distance/meters_from/:lng/:lat", ApiController, :within_distance
+    get "/participants/:distance/meters_from/:lng/:lat/in_last/:time/minutes", ApiController, :within_distance_by_time
 
     get "/routes_all", ApiController, :routes
     get "/routes_near/:lng/:lat", ApiController, :routes_nearby

@@ -22,6 +22,14 @@ defmodule BisignalWeb.ApiView do
     participants
   end
 
+  def render("nearby_current.json", %{participants: participants}) do
+    participants
+  end
+
+  def render("within_distance_by_time.json", %{participants: participants}) do
+    participants
+  end
+
   #ROUTE DETAILS API VIEW
   def render("routes.json", %{routes: routes}) do
     routes

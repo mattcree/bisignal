@@ -1,25 +1,47 @@
 <div class="panel panel-primary">
   <select id="distance" onchange="newApiCall()" class="controls">
-  <option value="1000">1km</option>
-  <option value="3000">3km</option>
-  <option value="5000">5km</option>
-  <option value="7000">7km</option>
-  <option value="10000">10km</option>
-  <option value="15000">15km</option>
-  <option value="20000">20km</option>
-  <option value="50000">50km</option>
-  <option value="100000">100km</option>
-  <option value="200000">200km</option>
-  <option value="500000">500km</option>
-  <option value="1000000">1000km</option>
-  <option value="2500000">2500km</option>
-  <option value="5000000">5000km</option>
-  <option value="10000000">10000km</option>
-  <option value="1000000000">All</option>
-</select>
+    <option value="1000">Rides within 1km</option>
+    <option value="3000">Rides within 3km</option>
+    <option value="5000">Rides within 5km</option>
+    <option value="7000">Rides within 7km</option>
+    <option value="10000">Rides within 10km</option>
+    <option value="15000">Rides within 15km</option>
+    <option value="20000">Rides within 20km</option>
+    <option value="50000">Rides within 50km</option>
+    <option value="100000">Rides within 100km</option>
+  </select>
 
-<div id="mapholder" style="height:30em;"></div>
-<div id="error"></div>
+  <select name="dist" id="participantDistance" onchange="getMarkers()" class="controls">
+    <option value="1000">1km</option>
+    <option value="3000">3km</option>
+    <option value="5000">5km</option>
+    <option value="7000">7km</option>
+    <option value="10000">10km</option>
+    <option value="15000">15km</option>
+    <option value="20000">20km</option>
+    <option value="50000">50km</option>
+    <option value="100000">100km</option>
+    <option value="200000">200km</option>
+    <option value="500000">500km</option>
+    <option value="750000">750km</option>
+    <option value="1000000">1000km</option>
+  </select>
+
+  <select id="time" onchange="getMarkers()" class="controls">
+    <option value="1">Now</option>
+    <option value="3">Last 3 minutes</option>
+    <option value="5">Last 5 minutes</option>
+    <option value="7">Last 7 minutes</option>
+    <option value="15">Last 15 minutes</option>
+    <option value="30">Last 30 minutes</option>
+    <option value="60">Last 1 hour</option>
+    <option value="90">Last 1 hour 30</option>
+    <option value="120">Last 2 hours</option>
+    <option value="180">Last 3 hours</option>
+  </select>
+
+  <div id="mapholder" style="height:30em;"></div>
+  <div id="error"></div>
 </div>
 
 
