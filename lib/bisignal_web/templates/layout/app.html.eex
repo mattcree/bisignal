@@ -33,9 +33,17 @@
             <li><a href="<%= page_path @conn, :index %>">Home</a></li>
             <li><a href="<%= route_detail_path @conn, :index %>">All Rides</a></li>
             <%= if @current_user do %>
-            <li><a href="<%= user_participant_path @conn, :show_by_user, @current_user %>">Participation</a></li>
-            <li><a href="<%= user_path(@conn, :show, @current_user.id) %>"><%= @current_user.name %>'s Account</a></li>
-            <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+            <li class="btn-md btn-default"><a href="<%= user_participant_path @conn, :show_by_user, @current_user %>">Broadcast!</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="<%= user_path(@conn, :show, @current_user.id) %>">Manage Account</a></li>
+                  <li><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @current_user) %></li>
+
+                <li role="separator" class="divider"></li>
+                <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
+              </ul>
+            </li>
             <% else %>
             <li><a href="<%= user_path @conn, :new %>">New user</a></li>
             <li><a href="<%= session_path @conn, :new %>">Login</a></li>

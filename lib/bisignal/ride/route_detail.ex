@@ -31,6 +31,7 @@ defmodule Bisignal.Ride.RouteDetail do
 
   defimpl Poison.Encoder, for: Bisignal.Ride.RouteDetail do
     def encode(geometry, options) do
+      IO.inspect "POISON IS DOING SHIT RITE NOW"
       geometry = RouteDetail.encode_model(geometry)
       Poison.Encoder.Map.encode(Map.take(geometry, [:name, :datetime, :start, :end, :start_name, :end_name]), options)
     end

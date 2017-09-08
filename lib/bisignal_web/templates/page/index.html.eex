@@ -1,4 +1,5 @@
-<select id="distance" onchange="newApiCall()" class="controls">
+<div class="panel panel-primary">
+  <select id="distance" onchange="newApiCall()" class="controls">
   <option value="1000">1km</option>
   <option value="3000">3km</option>
   <option value="5000">5km</option>
@@ -14,9 +15,13 @@
   <option value="2500000">2500km</option>
   <option value="5000000">5000km</option>
   <option value="10000000">10000km</option>
+  <option value="1000000000">All</option>
 </select>
 
-<div id="mapholder" style="clear:both; height:30em"></div>
+<div id="mapholder" style="height:30em;"></div>
+<div id="error"></div>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="<%= static_path(@conn, "/js/multiroute.js") %>"></script>

@@ -20,7 +20,7 @@ defmodule Bisignal.Mixfile do
   def application do
     [
       mod: {Bisignal.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :timex],
     ]
   end
 
@@ -45,7 +45,8 @@ defmodule Bisignal.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       {:geo, "~> 2.0"},
       {:geo_postgis, "~> 1.0"},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
+      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:timex, "~> 3.1"}
     ]
   end
 

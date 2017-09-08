@@ -1,32 +1,50 @@
-<%= if Enum.empty?(@route_details) do %>
-<h3> No participation found. </h3>
-<% else %>
-<table class="table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Datetime</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for route_detail <- @route_details do %>
-    <tr>
-      <td class="text-left"><p><span><%= link "Broadcast", to: user_participant_path(@conn, :show, @current_user, route_detail), class: "btn btn-info btn-xs" %></span></p>
-  </td>
-      <td><%= route_detail.name %></td>
-      <td><%= route_detail.start_name %></td>
-      <td><%= route_detail.end_name %></td>
-      <td><%= route_detail.datetime %></td>
-      <td class="text-right">
-        <p><span><%= link "Leave", to: participant_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Want to Leave this Ride?"], class: "btn btn-danger btn-xs" %></span></p>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-<% end %>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h2>All Participating In</h2>
+  </div>
+  <div class="panel-body text-center">
+    <%= if Enum.empty?(@route_details) do %>
+    <b> No Rides found. </b>
+    <% else %>
+    <%= for route_detail <- @route_details do %>
+        <div class="panel panel-default ">
+          <div class="panel-heading">
+            <div class="text-center">
+              <div class="row">
+                <div class="col-sm-9">
+                    <h3 class="pull-left"><%= route_detail.name %></h3>
+                </div>
+                <div class="col-sm-3">
+                  <h4 class="pull-right">
+                  <small>Scheduled for <em><%= route_detail.datetime.day %>/<%= route_detail.datetime.month %>/<%= route_detail.datetime.year %></em></small>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>  
+          <div class="panel-body">
+            <p><b>From</b> <%= route_detail.start_name %>
+            <b>to</b> <%= route_detail.end_name %></p>
+            <span><%= link "Broadcast!", to: user_participant_path(@conn, :show, @current_user, route_detail), class: "btn btn-success btn-lg btn-block" %></span>
+          </div>
+              
+          <div class="panel-footer">
+              <span><%= link "User", to: user_path(@conn, :show, route_detail.user_id), class: "btn btn-default pull-left" %></span>
+              <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-info" %></span>
+              <span><%= link "Quit", to: participant_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Want to Quit this Ride?"], class: "btn btn-danger pull-right" %></span>
+          </div>
+        </div>
+    <% end %>
+    <% end %>
+
+
+
+    <div class="row text-center"> 
+      <script>
+        document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
+      </script>
+    </div>
+  </div>
+</div>
+
 

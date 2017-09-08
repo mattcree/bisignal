@@ -1,13 +1,19 @@
-<div class="jumbotron">
-<button type="button" id="broadcast" class="btn btn-success">Start Broadcasting</button>
-<button type="button" id="disconnect" style="display: none;" class="btn btn-danger">Stop Broadcasting</button>
-
-<div id="messages"></div>
-
-<div id="mapholder"></div>
+<div class="panel panel-info">
+  <div class="panel-heading">
+  </div>
+  <div class="panel-body text-center">
+	<button type="button" id="broadcast" class="btn btn-success btn-lg btn-block">Start</button>
+	<button type="button" id="disconnect" style="display: none;" class="btn btn-danger btn-lg btn-block">Stop</button>
+ </div>
+  <div class="panel-footer text-center">
+  	<script>
+		document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
+	</script>
+ </div>
 </div>
 
-<span><%= link "Back", to: user_participant_path(@conn, :show_by_user, @current_user) %></span>
+
+
 <script>
-  window.participant_id = "<%= @participant.id %>";	
+  window.participant_id = "<%= @participant.id %>";
 </script>

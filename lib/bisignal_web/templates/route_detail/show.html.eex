@@ -1,42 +1,66 @@
-<h2>Ride Details</h2>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="text-center">
+      <div class="row">
+        <div class="col-sm-9">
+          <h2 class="pull-left"><%= @route_detail.name %></h2>
+        </div>
+        <div class="col-sm-3">
+          <h4 class="pull-right">
+          <small>Scheduled for <em><%= @route_detail.datetime.day %>/<%= @route_detail.datetime.month %>/<%= @route_detail.datetime.year %></em></small>
+            <%= if @current_user do %>
+              <%= if @current_user.name in @participants do %>
+                <p><span><%= link "Leave", to: participant_path(@conn, :delete, @route_detail), 
+                                            method: :delete, data: [confirm: "Want to Leave this Ride?"], 
+                                              class: "btn btn-danger btn-md" %></span></p>
+              <% else %>
+                <p><span><%= link "Join", to: participant_path(@conn, :create, @route_detail), 
+                                            method: :post, data: [confirm: "Want to Join this Ride?"], 
+                                              class: "btn btn-success btn-md" %></span></p>
+              <% end %>
+            <% end %>
+          </h4>
 
-  <p><strong>Name:</strong> <%= @route_detail.name %></p>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+
+  <div class="panel-body">
+    <p>A trip between <%= @route_detail.start_name %> and <%= @route_detail.end_name %>.</p>
+    <div id="map" style="height:30em"></div>
+  </div>
+  <div class="panel-footer">
+
+    <details>
+       <summary>Show Participants</summary>
+        <ul>
+          <%= if Enum.empty?(@participants) do %>
+            <b> None </b>
+          <% else %>
+            <%= for participant <- @participants do %>
+              <li><b><%= participant %></b></li>
+            <% end %>
+          <% end %>
+        </ul>
+    </details>
+    <script>
+      document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
+    </script>
+  </div>
+
+</div>
+
+
+
+
   <div id="coords" 
     data-start="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>"
     data-end="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" 
   />
-  <div id="map" style="clear:both; height:30em"></div>
 
-  <p><strong>Start Name:</strong> <%= @route_detail.start_name %></p>
-
-  <p><strong>End Name:</strong> <%= @route_detail.end_name %></p>
-
-  <p><strong>Datetime:</strong> <%= @route_detail.datetime %></p>
-  
-  <%= if @current_user do %>
-    <%= if @current_user.name in @participants do %>
-      <p><span><%= link "Leave", to: participant_path(@conn, :delete, @route_detail), 
-                                  method: :delete, data: [confirm: "Want to Leave this Ride?"], 
-                                    class: "btn btn-danger btn-xs" %></span></p>
-    <% else %>
-      <p><span><%= link "Join", to: participant_path(@conn, :create, @route_detail), 
-                                  method: :post, data: [confirm: "Want to Join this Ride?"], 
-                                    class: "btn btn-success btn-xs" %></span></p>
-    <% end %>
-  <% end %>
-
-  <p><strong>Participants</strong></p>
-  <ul>
-    <%= if Enum.empty?(@participants) do %>
-      <b> None </b>
-    <% else %>
-      <%= for participant <- @participants do %>
-        <li><%= participant %></li>
-      <% end %>
-    <% end %>
-  </ul>
-
-<span><%= link "Back", to: route_detail_path(@conn, :index) %></span>
 <script src='<%= static_path(@conn, "/js/displayroute.js") %>'></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
     async defer></script>

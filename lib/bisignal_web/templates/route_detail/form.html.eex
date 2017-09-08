@@ -1,20 +1,21 @@
-
-<%= form_for @changeset, @action, fn f -> %>
-
-  <%= if @changeset.action do %>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h2>Add New Ride</h2>
+    <%= form_for @changeset, @action, fn f -> %>
+    <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
     </div>
-  <% end %>
-
-  <div class="form-group">
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <div class="form-group">
     <%= label f, :name, class: "control-label" %>
     <%= text_input f, :name, class: "form-control" %>
     <%= error_tag f, :name %>
-  </div>
+    </div>
 
-
-  <div class="form-group">
+    <div class="form-group">
     <%= hidden_input f, :start, id: "start" %>
     <%= hidden_input f, :end, id: "end" %>
     <%= hidden_input f, :waypoints, id: "waypoints" %>
@@ -22,17 +23,38 @@
     <%= hidden_input f, :end_name, id: "end_name" %>
 
     <%= render "routepicker.html", conn: @conn %>
-  </div>
-  
-  <div class="form-group">
+    </div>
+
+    <div class="form-group">
     <%= label f, :datetime, class: "control-label" %>
     <%= datetime_select f, :datetime, class: "form-control" %>
     <%= error_tag f, :datetime %>
-  </div>
+    </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
   </div>
-<% end %>
+  <div class="panel-footer text-left">
+    <div class="form-group">
+    <script>
+      document.write('<a class="btn btn-danger" href="' + document.referrer + '">Cancel</a>');
+    </script>
+    <%= submit "Submit", class: "btn btn-success pull-right" %>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
 
 

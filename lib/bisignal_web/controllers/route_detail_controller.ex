@@ -31,7 +31,11 @@ defmodule BisignalWeb.RouteDetailController do
         |> put_flash(:info, "Route detail created successfully.")
         |> redirect(to: user_route_detail_path(conn, :user_show, user_id, route_detail))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        IO.inspect changeset
+        changeset_without_geo = RouteDetail.changeset(changeset.data, Map.merge(changeset.changes, %{start: nil, end: nil}))
+        conn
+        |> put_flash(:error, "Something went wrong! Some fields may not have been filled in. Please try again.")
+        |> render("new.html", changeset: changeset_without_geo)
     end
   end
 

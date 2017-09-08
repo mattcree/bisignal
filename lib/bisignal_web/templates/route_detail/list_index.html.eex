@@ -1,36 +1,52 @@
-<h2>All Rides</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>All Rides</h2>
+  </div>
+  <div class="panel-body text-center">
+    <%= if Enum.empty?(@route_details) do %>
+    <b> No Rides found. </b>
+    <% else %>
+    <%= for route_detail <- @route_details do %>
+        <div class="panel panel-default ">
+          <div class="panel-heading">
+            <div class="text-center">
+              <div class="row">
+                <div class="col-sm-9">
+                    <h3 class="pull-left"><%= route_detail.name %></h3>
+                </div>
+                <div class="col-sm-3">
+                  <h4 class="pull-right">
+                  <small><em><%= route_detail.datetime.day %>/<%= route_detail.datetime.month %>/<%= route_detail.datetime.year %></em></small>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>  
+          <div class="panel-body">
+            <p><b>From</b> <%= route_detail.start_name %>
+            <b>to</b> <%= route_detail.end_name %></p>
+          </div>
+              
+          <div class="panel-footer text-left">
+              <span><%= link "User", to: user_path(@conn, :show, route_detail.user_id), class: "btn btn-default" %></span>
+              <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-info pull-right" %></span>
+          </div>
+        </div>
+    <% end %>
+    <% end %>
 
 
-<%= if Enum.empty?(@route_details) do %>
-<b> No Rides found. </b>
-<% else %>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Datetime</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for route_detail <- @route_details do %>
-    <tr>
-      <td><%= route_detail.name %></td>
-      <td><%= route_detail.start_name %></td>
-      <td><%= route_detail.end_name %></td>
-      <td><%= route_detail.datetime %></td>
+
+    <div class="row text-center"> 
+      <script>
+        document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
+      </script>
+    </div>
+  </div>
+</div>
 
 
-      <td class="text-right">
-        <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-default btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-<% end %>
+
 
 
 

@@ -1,61 +1,77 @@
-<%= if @user.id == @current_user.id do %>
-  <h2>Your Info</h2>
-<% else %>
-  <h2><%= @user.name %>'s Info</h2>
-<% end %>
 
-
-<ul>
-  <li>
-  <strong>Name:</strong>
-    <%= @user.name %>
-  </li>
-  <li>
-  <strong>Email:</strong>
-    <%= @user.email %>
-  </li>
-    <li>
-  <strong>Member since:</strong>
-    <%= @user.inserted_at %>
-  </li>
-</ul>
-
-<h2>Rides Organised</h2>
-
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <%= if @user.id == @current_user.id do %>
+      <h2>Your Info</h2>
+    <% else %>
+      <h2><%= @user.name %>'s Info</h2>
+    <% end %>
+  </div>
+  <div class="panel-body">
+      <p><b>Name:</b> <%= @user.name %></p>
+      <p><b>Email:</b><%= @user.email %></p>
+      <p><b>Member since:</b> <%= @user.inserted_at.day %>/<%= @user.inserted_at.month %>/<%= @user.inserted_at.year %></p>
+      <div class="panel-body">
+  <h2 class="text-center">Rides As Organiser</h1>
+  <div class="text-center">
+      <script>
+    document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
+  </script>
+  <%= if @user.id == @current_user.id do %>
+    <span><%= link "Add New", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success" %></span>
+  <% end %>
+  </div>
+</div>
 <%= if Enum.empty?(@route_details) do %>
 <h3> No Rides found. </h3>
 <% else %>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start</th>
-      <th>End</th>
-      <th>Datetime</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for route_detail <- @route_details do %>
-    <tr>
-      <td><%= route_detail.name %></td>
-      <td><%= route_detail.start_name %></td>
-      <td><%= route_detail.end_name %></td>
-      <td><%= route_detail.datetime %></td>
-      
-      <td class="text-right">
-        <span><%= link "Show", to: user_route_detail_path(@conn, :user_show, @user, route_detail), class: "btn btn-default btn-xs" %></span>
-      </td>
-    </tr>
+  <%= for route_detail <- @route_details do %>
+    <div class="panel panel-default ">
+      <div class="panel-heading">
+        <div class="text-center">
+          <div class="row">
+            <div class="col-sm-9">
+                <h3 class="pull-left"><%= route_detail.name %></h3>
+            </div>
+            <div class="col-sm-3">
+              <h4 class="pull-right">
+              <small>Scheduled for <em><%= route_detail.datetime.day %>/<%= route_detail.datetime.month %>/<%= route_detail.datetime.year %></em></small>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>  
+      <div class="panel-body">
+        <p><b>From</b> <%= route_detail.start_name %>
+        <b>to</b> <%= route_detail.end_name %></p>
+      </div>
+          
+      <div class="panel-footer text-right">
+          <%= link "Show", to: user_route_detail_path(@conn, :user_show, @user, route_detail), class: "btn btn-info pull-left" %>
+        <%= if @user.id == @current_user.id do %>
+          <%= link "Delete", to: user_route_detail_path(@conn, :delete_by_user, @user, route_detail), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
-  </tbody>
-</table>
-<% end %>
-
-<%= if @user.id == @current_user.id do %>
-  <p><span><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success btn-xs" %></span></p>
-<% end %>
-
+<div class="row text-center"> 
 <script>
-    document.write('<a href="' + document.referrer + '">Back</a>');
+  document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
 </script>
+<%= if @user.id == @current_user.id do %>
+  <span><%= link "Add New", to: user_route_detail_path(@conn, :new, @user), class: "btn btn-success" %></span>
+<% end %>
+</div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
