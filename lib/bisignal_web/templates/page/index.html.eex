@@ -69,6 +69,7 @@ var pos = {
 function initMap() {
   map = new google.maps.Map(mapHolder, {
       mapTypeControl: false,
+      center: pos,
       zoom: 5
   });
 
