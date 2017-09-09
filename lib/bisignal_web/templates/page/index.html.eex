@@ -67,6 +67,7 @@ var pos = {
 
 
 function initMap() {
+  getLocation();
   map = new google.maps.Map(mapHolder, {
       mapTypeControl: false,
       center: pos,
@@ -78,7 +79,6 @@ function initMap() {
   map.controls[google.maps.ControlPosition.TOP_CENTER].push(timeInput);
 
   directionsService = new google.maps.DirectionsService();
-  getLocation();
 }
 
 function getLocation() {
@@ -113,7 +113,6 @@ function newApiCall() {
     processRequests();
     listenForIdleAndCenter();
     getMarkers();
-    map.setCenter(pos);
   }).fail(function() {
     console.log("Uh oh");
   })
@@ -151,7 +150,7 @@ function resetRenderArray() {
 function listenForIdleAndCenter() {
     google.maps.event.addListener(map, 'idle', function() {
     if (bounds) {
-      map.setCenter(pos);
+      map.setCenter(bounds.getCenter());
       map.fitBounds(bounds)
     }
     google.maps.event.clearListeners(map, 'idle')
@@ -180,7 +179,6 @@ function processRequests(){
   function nextRequest(){
     current++;
     if(current >= requestArray.length){
-      map.setCenter(bounds.getCenter());
       return;
     }
     submitRequest();
@@ -202,7 +200,6 @@ function getMarkers() {
         });
         currentMarkers[data[i].user_id] = marker;
       }
-      map.setCenter(pos);
     }
     window.setTimeout(getMarkers, INTERVAL);
   });
