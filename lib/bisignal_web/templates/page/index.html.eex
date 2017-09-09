@@ -149,7 +149,7 @@ function resetRenderArray() {
 function listenForIdleAndCenter() {
     google.maps.event.addListener(map, 'idle', function() {
     if (bounds) {
-      map.setCenter(bounds.getCenter());
+      map.setCenter(pos);
       map.fitBounds(bounds)
     }
     google.maps.event.clearListeners(map, 'idle')
