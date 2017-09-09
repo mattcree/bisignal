@@ -200,6 +200,7 @@ function getMarkers() {
         });
         currentMarkers[data[i].user_id] = marker;
       }
+      map.setCenter(pos);
     }
     window.setTimeout(getMarkers, INTERVAL);
   });
