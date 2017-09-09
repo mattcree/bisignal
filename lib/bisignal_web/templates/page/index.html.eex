@@ -60,7 +60,10 @@ var errorBox = document.getElementById('error')
 var bounds;
 var icons;
 var map;
-var pos;
+var pos = {
+    lat: 54.488389,
+    lng: -6.042480
+  }
 
 
 function initMap() {
