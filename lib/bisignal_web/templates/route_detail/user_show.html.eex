@@ -24,8 +24,7 @@
 
 <link rel="stylesheet" href='<%= static_path(@conn, "/css/routepicker.css") %>'>
 <script src='<%= static_path(@conn, "/js/displayroute.js") %>'></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
-    async defer></script>
+
 
 <script>
   //  testing only
@@ -71,3 +70,6 @@
 
 
 </script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
+    async defer></script>
