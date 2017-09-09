@@ -112,6 +112,7 @@ function newApiCall() {
     processRequests();
     listenForIdleAndCenter();
     getMarkers();
+    map.setCenter(pos);
   }).fail(function() {
     console.log("Uh oh");
   })
