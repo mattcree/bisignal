@@ -48,7 +48,7 @@ defmodule BisignalWeb.RouteDetailController do
       route_detail ->
         user = Accounts.get(user_id)
         participants = Ride.get_participant_names(id)
-        render(conn, "user_show.html", route_detail: route_detail, participants: participants, user: user)
+        render(conn, "show.html", route_detail: route_detail, participants: participants, user: user)
     end
   end
 

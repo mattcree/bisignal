@@ -1,6 +1,7 @@
 <div class="panel panel-success">
   <div class="panel-heading">
     <h2>Add New Ride</h2>
+    <p>Here you complete the form to create a new Ride which is viewable to other site users. Other users may choose to participate in Rides you organise. If you are going to attend this ride, don't forget to join as a participant by going to <i>View All Rides</i>, selecting your Ride and choosing <i>Join</i>.</p>
     <%= form_for @changeset, @action, fn f -> %>
     <%= if @changeset.action do %>
     <div class="alert alert-danger">
@@ -35,13 +36,28 @@
     </div>
 
   </div>
-  <div class="panel-footer text-left">
-    <div class="form-group">
-    <script>
-      document.write('<a class="btn btn-danger" href="' + document.referrer + '">Cancel</a>');
-    </script>
-    <%= submit "Submit", class: "btn btn-success pull-right" %>
+  <div class="panel-footer">
+  <div class="row">
+    <div class="col-md-3">
+      
     </div>
+    <div class="col-md-3">
+      <script>
+        document.write('<a class="btn btn-danger btn-block" href="' + document.referrer + '">Cancel</a>');
+      </script>
+    </div>
+    <div class="col-md-3">
+      <%= submit "Submit", class: "btn btn-success btn-block" %>
+    </div>
+    <div class="col-md-3">
+      
+    </div>
+  </div>
+
+
+
+
+
     <% end %>
   </div>
 </div>

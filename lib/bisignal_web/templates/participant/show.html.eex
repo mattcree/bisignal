@@ -1,9 +1,10 @@
 <div class="panel panel-info">
   <div class="panel-heading">
+    <h3>Broadcast Location</h3>
   </div>
   <div class="panel-body text-center">
-	<button type="button" id="broadcast" class="btn btn-success btn-lg btn-block">Start</button>
-	<button type="button" id="disconnect" style="display: none;" class="btn btn-danger btn-lg btn-block">Stop</button>
+	<button type="button" id="broadcast" class="btn btn-success btn-lg">Start</button>
+	<button type="button" id="disconnect" style="display: none;" class="btn btn-danger btn-lg">Stop</button>
  </div>
   <div class="panel-footer text-center">
   	<script>

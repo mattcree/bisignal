@@ -1,18 +1,19 @@
 <div class="panel panel-success">
   <div class="panel-heading">
     <h2>All Participating In</h2>
+    <p>A complete list of all the rides you've joined as a participant. To start broadcasting your location, choose <i>Go To Broadcast</i> next to the ride you intend to participate in.</p>
   </div>
   <div class="panel-body text-center">
     <%= if Enum.empty?(@route_details) do %>
     <b> No Rides found. </b>
     <% else %>
-    <%= for route_detail <- @route_details do %>
+      <%= for route_detail <- @route_details do %>
         <div class="panel panel-default ">
           <div class="panel-heading">
             <div class="text-center">
               <div class="row">
                 <div class="col-sm-9">
-                    <h3 class="pull-left"><%= route_detail.name %></h3>
+                    <h3 class="pull-left"><%= link route_detail.name, to: route_detail_path(@conn, :show, route_detail) %></h3>
                 </div>
                 <div class="col-sm-3">
                   <h4 class="pull-right">
@@ -23,27 +24,45 @@
             </div>
           </div>  
           <div class="panel-body">
-            <p><b>From</b> <%= route_detail.start_name %>
-            <b>to</b> <%= route_detail.end_name %></p>
-            <span><%= link "Broadcast!", to: user_participant_path(@conn, :show, @current_user, route_detail), class: "btn btn-success btn-lg btn-block" %></span>
+            <p>
+            </p>
+            <div class="row">
+              <div class="col-md-4">
+                <p><strong>From</strong> <%= route_detail.start_name %></p>
+              </div>
+              <div class="col-md-4">
+                <p><strong>To</strong> <%= route_detail.end_name %></p>
+              </div>
+              <div class="col-md-4">
+                <span><%= link "Go To Broadcast", to: user_participant_path(@conn, :show, @current_user, route_detail), class: "btn btn-success btn-lg" %></span>
+              </div>
+            </div>
+
           </div>
               
           <div class="panel-footer">
-              <span><%= link "User", to: user_path(@conn, :show, route_detail.user_id), class: "btn btn-default pull-left" %></span>
-              <span><%= link "Show", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-info" %></span>
-              <span><%= link "Quit", to: participant_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Want to Quit this Ride?"], class: "btn btn-danger pull-right" %></span>
+            <div class="row">
+              <div class="col-md-4">
+                <span><%= link "View Creator's Profile", to: user_path(@conn, :show, route_detail.user_id), class: "btn btn-default btn-block" %></span>
+              </div>
+              <div class="col-md-4">
+                <span><%= link "View All Ride Info", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-info btn-block" %></span>
+              </div>
+              <div class="col-md-4">
+                <span><%= link "Quit This Ride", to: participant_path(@conn, :delete, route_detail), method: :delete, data: [confirm: "Want to Quit this Ride?"], class: "btn btn-danger btn-block" %></span>
+              </div>
+            </div>
           </div>
         </div>
+      <% end %>
     <% end %>
-    <% end %>
-
-
 
     <div class="row text-center"> 
       <script>
         document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
       </script>
     </div>
+
   </div>
 </div>
 
