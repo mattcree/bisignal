@@ -208,6 +208,7 @@ function getMarkers() {
       if(currentMarkers.hasOwnProperty(data[i].user_id)) {
         currentMarkers[data[i].user_id].setPosition(new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]))
         currentMarkers[data[i].user_id]._circle.radius = data[i].loc_accuracy
+        currentMarkers[data[i].user_id].title = "Participant " + data[i].user_id + " on Route " + data[i].route_id + " accurate to " + data[i].loc_accuracy + " meters"
       } else {
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]),
