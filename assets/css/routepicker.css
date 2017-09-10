@@ -46,6 +46,21 @@ html, body, #mapholder {
   border-color: #4d90fe;
 }
 
+label {
+  margin: 0em;
+  padding: 0em;
+  margin-top: 1em;
+}
+
+.centerButton {
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+}
+
 #mode-selector {
   color: #fff;
   background-color: #4d90fe;

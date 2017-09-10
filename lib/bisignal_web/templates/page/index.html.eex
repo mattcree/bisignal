@@ -1,7 +1,10 @@
 
+<input type="button" id="center" onclick="centerMap()" value="Center On Me" class="controls centerButton"/>
 <div class="panel panel-primary">
+  
   <div id="mapholder" style="height:30em;"></div>
   <div id="error"></div>
+
 
   <div class="panel-footer">
     <div class="row text-center">
@@ -73,6 +76,7 @@ var partDistInput = document.getElementById('participantDistance');
 var timeInput = document.getElementById('time');
 var mapHolder = document.getElementById('mapholder')
 var errorBox = document.getElementById('error')
+var centerButton = document.getElementById('center')
 var bounds;
 var icons;
 var map;
@@ -89,6 +93,7 @@ function initMap() {
       zoom: 5
   });
 
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerButton);
   //map.controls[google.maps.ControlPosition.TOP_CENTER].push(distanceInput);
   //map.controls[google.maps.ControlPosition.TOP_CENTER].push(partDistInput);
   //map.controls[google.maps.ControlPosition.TOP_CENTER].push(timeInput);
@@ -225,11 +230,13 @@ function resetCurrentMarkers() {
   })
 }
 
+function centerMap() {
+  map.panTo(pos)
+}
 </script>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="<%= static_path(@conn, "/js/multiroute.js") %>"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
     async defer></script>
 
