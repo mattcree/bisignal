@@ -1,15 +1,23 @@
-<div class="panel panel-info">
+<div class="panel panel-warning">
   <div class="panel-heading">
-    <h3>Broadcast Location</h3>
+    <h2>Broadcast Location</h2>
+    <p>Press <i>Start</i> to begin broadcasting your location. <strong>Warning:</strong> your location will be viewable by the general public and as such you should only begin to transmit if you are happy with other people seeing your location.</p>
   </div>
   <div class="panel-body text-center">
 	<button type="button" id="broadcast" class="btn btn-success btn-lg">Start</button>
 	<button type="button" id="disconnect" style="display: none;" class="btn btn-danger btn-lg">Stop</button>
  </div>
-  <div class="panel-footer text-center">
-  	<script>
-		document.write('<a class="btn btn-default" href="' + document.referrer + '">Back</a>');
-	</script>
+  <div class="panel-footer">
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <script>
+          document.write('<a class="btn btn-default btn-block" href="' + document.referrer + '">Back</a>');
+        </script>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+
  </div>
 </div>
 
