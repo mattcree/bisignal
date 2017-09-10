@@ -84,13 +84,14 @@ var pos = {
     lat: 54.488389,
     lng: -6.042480
   }
+var circle;
 
 
 function initMap() {
   map = new google.maps.Map(mapHolder, {
       mapTypeControl: false,
       center: pos,
-      zoom: 5
+      zoom: 8
   });
 
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerButton);
@@ -209,15 +210,28 @@ function getMarkers() {
       } else {
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]),
-          title: "Participant " + data[i].user_id + " on Route " + data[i].route_id,
+          title: "Participant " + data[i].user_id + " on Route " + data[i].route_id + " accurate to " + data[i].loc_accuracy + " meters",
           map: map,
-          icon: {url: 'http://maps.google.com/mapfiles/kml/shapes/cycling.png', scaledSize: new google.maps.Size(25, 25)}
+          icon: {url: 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png', scaledSize: new google.maps.Size(30, 30)}
         });
+        if (data[i].loc_accuracy > 6) {
+          addCircleToMarker(marker, data[i].loc_accuracy)
+        }
         currentMarkers[data[i].user_id] = marker;
       }
     }
     window.setTimeout(getMarkers, INTERVAL);
   });
+}
+
+function addCircleToMarker(marker, radius) {
+  var thisCircle = new google.maps.Circle({
+      map: map,
+      radius: radius,    // 10 miles in metres
+      fillColor: '#000080'
+    });
+  thisCircle.bindTo('center', marker, 'position');
+  circle = thisCircle
 }
 
 function resetCurrentMarkers() {
