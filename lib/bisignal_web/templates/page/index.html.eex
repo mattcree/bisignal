@@ -1,67 +1,90 @@
-
-<input type="button" id="center" onclick="centerMap()" value="Center On Me" class="controls centerButton"/>
-<div class="panel panel-primary">
-  
+<div class="panel panel-primary" id="mapAndOptions">
+  <input type="button" id="center" onclick="centerMap()" value="Get Location" class="controls centerButton"/>
   <div id="mapholder" style="height:30em;"></div>
-  <div id="error"></div>
-
-
-  <div class="panel-footer">
+  <div class="panel-footer" id="options">
     <div class="row text-center">
-  <div class="col-md-4">
-  <label for="distance">Show All Routes Within</label>
-    <select id="distance" onchange="newApiCall()" class="controls dropdown-selection btn btn-default btn-block">
-      <option value="1000">1km</option>
-      <option value="3000">3km</option>
-      <option value="5000">5km</option>
-      <option value="7000">7km</option>
-      <option value="10000">10km</option>
-      <option value="15000">15km</option>
-      <option value="20000">20km</option>
-      <option value="50000">50km</option>
-      <option value="100000">100km</option>
-      <option value="200000">200km</option>
-      <option value="500000">500km</option>
-      <option value="750000">750km</option>
-      <option value="1000000">1000km</option>
-    </select>  
-  </div>
-  <div class="col-md-4">
-  <label for="participantDistance">Show All Riders Within</label>
-    <select name="dist" id="participantDistance" onchange="getMarkers()" class="controls dropdown-selection btn btn-default btn-block">
-      <option value="1000">1km</option>
-      <option value="3000">3km</option>
-      <option value="5000">5km</option>
-      <option value="7000">7km</option>
-      <option value="10000">10km</option>
-      <option value="15000">15km</option>
-      <option value="20000">20km</option>
-      <option value="50000">50km</option>
-      <option value="100000">100km</option>
-      <option value="200000">200km</option>
-      <option value="500000">500km</option>
-      <option value="750000">750km</option>
-      <option value="1000000">1000km</option>
-    </select>
-  </div>
-  <div class="col-md-4">
-  <label for="time">Rider's Last Location Update</label>
-    <select id="time" onchange="getMarkers()" class="controls dropdown-selection btn btn-default btn-block">
-      <option value="1">Now</option>
-      <option value="3">3 minutes</option>
-      <option value="5">5 minutes</option>
-      <option value="7">7 minutes</option>
-      <option value="15">15 minutes</option>
-      <option value="30">30 minutes</option>
-      <option value="60">1 hour</option>
-      <option value="90">1 hour 30</option>
-      <option value="120">2 hours</option>
-      <option value="180">3 hours</option>
-    </select>
+      <div class="col-md-4">
+        <label for="distance">Show All Routes Within</label>
+        <select id="distance" onchange="newApiCall()" class="controls dropdown-selection btn btn-default btn-block">
+          <option value="1000">1km</option>
+          <option value="3000">3km</option>
+          <option value="5000">5km</option>
+          <option value="7000">7km</option>
+          <option value="10000">10km</option>
+          <option value="15000">15km</option>
+          <option value="20000">20km</option>
+          <option value="50000">50km</option>
+          <option value="100000">100km</option>
+          <option value="200000">200km</option>
+          <option value="500000">500km</option>
+          <option value="750000">750km</option>
+          <option value="1000000">1000km</option>
+        </select>  
+      </div>
+      <div class="col-md-4">
+        <label for="participantDistance">Show All Riders Within</label>
+        <select name="dist" id="participantDistance" onchange="getMarkers()" class="controls dropdown-selection btn btn-default btn-block">
+          <option value="1000">1km</option>
+          <option value="3000">3km</option>
+          <option value="5000">5km</option>
+          <option value="7000">7km</option>
+          <option value="10000">10km</option>
+          <option value="15000">15km</option>
+          <option value="20000">20km</option>
+          <option value="50000">50km</option>
+          <option value="100000">100km</option>
+          <option value="200000">200km</option>
+          <option value="500000">500km</option>
+          <option value="750000">750km</option>
+          <option value="1000000">1000km</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="time">Rider's Last Location Update</label>
+        <select id="time" onchange="getMarkers()" class="controls dropdown-selection btn btn-default btn-block">
+          <option value="1">Now</option>
+          <option value="3">3 minutes</option>
+          <option value="5">5 minutes</option>
+          <option value="7">7 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1 hour 30</option>
+          <option value="120">2 hours</option>
+          <option value="180">3 hours</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
+
+
+<div id="error" class="panel panel-info">
+  <div class="panel-heading">
+    <h2>Location Required</h2>
+    <p><i>BiSignal</i> has detected that you have not shared your location with us. Without your location, it's not possible to show Rider positions. Information about supported browsers and how to enable Geolocation is provided below.</p>
+  </div>
+  <div class="panel-body">
+    <h3>Supported Browsers</h3>
+    <p>HTML5 Geolocation is supported in the following browsers:</p>
+    <ul>
+      <li>Firefox 3.5+</li>
+      <li>Chrome 5.0+</li>
+      <li>Safari 5.0+</li>
+      <li>Opera 10.60+</li>
+      <li>Internet Explorer 9.0+</li>
+    </ul>
+    <h3>How to Enable</h3>
+    <p>The following links explain how to enable Location sharing for your device:</p>
+    <ul>
+      <li><a href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DAndroid&hl=en">Chrome (Desktop, Android, and iPhone/iPad)</li>
+    </ul>
+  </div>
+  <div class="panel-footer">
+    
   </div>
 </div>
+
 
 <script>
     //HERE ONLY FOR TESTING
@@ -78,13 +101,11 @@ var mapHolder = document.getElementById('mapholder')
 var errorBox = document.getElementById('error')
 var centerButton = document.getElementById('center')
 var bounds;
-var icons;
 var map;
 var pos = {
     lat: 54.488389,
     lng: -6.042480
   }
-var circle;
 
 
 function initMap() {
@@ -114,11 +135,8 @@ function mapSuccess(position) {
 }
 
 function mapError() {
-  distanceInput.style.display = "none"
-  mapHolder.style.display = "none"
-  centerButton.style.display = "none"
+  document.getElementById('mapAndOptions').style.display = "none"
   errorBox.style.display = ""
-  errorBox.innerHTML = "Your location is required to use BiSignal"
 }
 
 function newApiCall() {
@@ -208,11 +226,11 @@ function getMarkers() {
       if(currentMarkers.hasOwnProperty(data[i].user_id)) {
         currentMarkers[data[i].user_id].setPosition(new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]))
         currentMarkers[data[i].user_id]._circle.radius = data[i].loc_accuracy
-        currentMarkers[data[i].user_id].title = "Participant " + data[i].user_id + " on Route " + data[i].route_id + " accurate to " + data[i].loc_accuracy + " meters"
+        currentMarkers[data[i].user_id].title = participantTitle(data[i])
       } else {
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]),
-          title: "Participant " + data[i].user_id + " on Route " + data[i].route_id + " accurate to " + data[i].loc_accuracy + " meters",
+          title: participantTitle(data[i]),
           map: map,
           icon: {url: 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png', scaledSize: new google.maps.Size(30, 30)}
         });
@@ -225,6 +243,10 @@ function getMarkers() {
     }
     window.setTimeout(getMarkers, INTERVAL);
   });
+}
+
+function participantTitle(participant) {
+  return "Participant " + participant.user_id + " on Route " + participant.route_id + " accurate to " + participant.loc_accuracy + " meters\nSeen " + participant.updated_at;
 }
 
 function addCircleToMarker(marker, radius) {

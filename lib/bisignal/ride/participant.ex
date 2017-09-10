@@ -3,7 +3,7 @@ defmodule Bisignal.Ride.Participant do
   import Ecto.Changeset
   alias Bisignal.Ride.Participant
 
-  @derive {Poison.Encoder, only: [:user_id, :route_id, :loc_accuracy, :geo_json]}
+  @derive {Poison.Encoder, only: [:user_id, :route_id, :loc_accuracy, :geo_json, :updated_at]}
   schema "participants" do
     field :user_id, :id
     field :route_id, :id
@@ -36,7 +36,7 @@ defmodule Bisignal.Ride.Participant do
   defimpl Poison.Encoder, for: Bisignal.Ride.Participant do
     def encode(geometry, options) do
       geometry = Participant.encode_model(geometry)
-      Poison.Encoder.Map.encode(Map.take(geometry, [:user_id, :route_id, :geo_json, :loc_accuracy]), options)
+      Poison.Encoder.Map.encode(Map.take(geometry, [:user_id, :route_id, :geo_json, :loc_accuracy, :updated_at]), options)
     end
   end
 end

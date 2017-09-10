@@ -58,6 +58,7 @@ let channel 		      = socket.channel("participant:" + window.participant_id , {}
 let messagesContainer = document.querySelector("#messages")
 let disconnectButton  = document.querySelector("#disconnect")
 let broadcastButton   = document.querySelector("#broadcast")
+let infoText          = document.querySelector("#infoText")
 let location
 
 if (socket.params.token != "") {
@@ -65,8 +66,12 @@ if (socket.params.token != "") {
 }
 
 function success(position) {
-  console.log(position.coords.accuracy)
-	channel.push("new_location", {participant: window.participant_id, longitude: position.coords.longitude, latitude: position.coords.latitude, accuracy: position.coords.accuracy})
+  console.log(position)
+  var long = position.coords.longitude;
+  var lat = position.coords.latitude;
+  var acc = position.coords.accuracy;
+  infoText.innerHTML = "Accuracy: " + acc  + " meters"
+	channel.push("new_location", {participant: window.participant_id, longitude: long, latitude: lat, accuracy: acc})
 }
 
 function failure(error) {
@@ -81,6 +86,7 @@ if (disconnectButton != null) {
   disconnectButton.onclick = function() {
     broadcastButton.style.display = ''
     disconnectButton.style.display = 'none';
+    infoText.innerHTML = ''
     navigator.geolocation.clearWatch(location)
   }
 } 
