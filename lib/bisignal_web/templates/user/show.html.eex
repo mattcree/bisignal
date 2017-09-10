@@ -37,7 +37,7 @@
         </div>
     </div>
         <%= if Enum.empty?(@route_details) do %>
-        <h3> No Rides found. </h3>
+        <h3 class="text-center">You haven't organised any Rides. Click <i>Add New</i> to get started.</h3>
         <% else %>
           <%= for route_detail <- @route_details do %>
             <div class="panel panel-default ">
@@ -93,8 +93,7 @@
 
             </div>
           <% end %>
-        <% end %>
-    <div class="row">
+              <div class="row">
       <div class="col-md-3">
         
       </div>
@@ -112,5 +111,6 @@
         
       </div>
     </div>
+        <% end %>
   </div>
 </div>

@@ -1,11 +1,20 @@
 <div class="panel panel-primary" id="mapAndOptions">
+  <div class="panel-heading">
+    <details>
+      <summary>Instructions</summary>
+      <h3>How to Use</h3>
+      <p>First, press <i>Get Location</i> to center the map. </p>
+      <p>If you want to see the Rides organised which Start or End near you, select an option from <i>Show All Routes Within</i>.</p>
+      <p>If you want to see the location of Rider, configure the options under <i>Show All Riders Within</i> and <i>Rider's Last Location Update</i>.</p>
+    </details>
+  </div>
   <input type="button" id="center" onclick="centerMap()" value="Get Location" class="controls centerButton"/>
   <div id="mapholder" style="height:30em;"></div>
   <div class="panel-footer" id="options">
     <div class="row text-center">
       <div class="col-md-4">
         <label for="distance">Show All Routes Within</label>
-        <select id="distance" onchange="newApiCall()" class="controls dropdown-selection btn btn-default btn-block">
+        <select id="distance" onchange="getRoutes()" class="controls dropdown-selection btn btn-default btn-block">
           <option value="1000">1km</option>
           <option value="3000">3km</option>
           <option value="5000">5km</option>
@@ -59,7 +68,7 @@
 </div>
 
 
-<div id="error" class="panel panel-info">
+<div id="error" class="panel panel-info" style="display:none;">
   <div class="panel-heading">
     <h2>Location Required</h2>
     <p><i>BiSignal</i> has detected that you have not shared your location with us. Without your location, it's not possible to show Rider positions. Information about supported browsers and how to enable Geolocation is provided below.</p>
@@ -103,9 +112,10 @@ var centerButton = document.getElementById('center')
 var bounds;
 var map;
 var pos = {
-    lat: 54.488389,
-    lng: -6.042480
-  }
+  lat: 54.488389,
+  lng: -6.042480
+}
+var userMarker;
 
 
 function initMap() {
@@ -117,6 +127,26 @@ function initMap() {
 
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerButton);
   directionsService = new google.maps.DirectionsService();
+
+  google.maps.event.addListener(map, "click", function (event) {
+    pos = {
+      lat: event.latLng.lat(), 
+      lng: event.latLng.lng()
+    }
+    if (userMarker == null) {
+      userMarker = new google.maps.Marker({
+        position: new google.maps.LatLng(pos.lat, pos.lng),
+        title: 'Your Location',
+        map: map,
+        icon: {url: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank.png', scaledSize: new google.maps.Size(30, 30)}
+      }); 
+    } else {
+      userMarker.setPosition(new google.maps.LatLng(pos.lat, pos.lng))
+    }
+
+    console.log( pos );
+  });
+
 }
 
 function getLocation() {
@@ -134,24 +164,70 @@ function mapSuccess(position) {
   };
 }
 
+
+
 function mapError() {
   document.getElementById('mapAndOptions').style.display = "none"
   errorBox.style.display = ""
 }
 
-function newApiCall() {
-  $.get('/api/routes_within/' + distanceInput.value + '/of/' + pos.lng + '/' + pos.lat).then(function(data) {
-    routeData = data;
-    buildRequestArrayAndBounds();
-    resetRenderArray();
-    processRequests();
-    listenForIdleAndCenter();
-    getMarkers();
+function getRoutes() {
+  $.get(formatRouteApiCall(distanceInput.value, pos.lng, pos.lat)).then(function(data) {
+    if (data != []) {
+      routeData = data;
+      buildRequestArrayAndBounds()
+      resetRenderArray();
+      processRequests();
+    } else {
+      resetRenderArray();
+    }
+    //listenForIdleAndCenter();
   }).fail(function() {
     console.log("Uh oh");
   })
 }
 
+//This makes an API call to get all participants within a distance of a location, whose last
+//update was within a given time. The marker positions are first reset, then we iterate through the
+//participants 
+function getMarkers() {
+  $.get(formatParticipantApiCall(partDistInput.value, pos.lng, pos.lat, timeInput.value)).then(function(data) {
+    console.log("API CALL: " + formatParticipantApiCall(partDistInput.value, pos.lng, pos.lat, timeInput.value))
+    resetMarkerPosition();
+    for (var i = 0; i < data.length; i++) {
+      current = data[i]
+      user_id = current.user_id
+      if(currentMarkers.hasOwnProperty(user_id)) {
+        existingMarker = currentMarkers[user_id]
+        existingMarker.setPosition(new google.maps.LatLng(current.geo_json.coordinates[1], current.geo_json.coordinates[0]))
+        existingMarker._circle.radius = current.loc_accuracy
+        existingMarker.title = participantTitle(current)
+      } else {
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(current.geo_json.coordinates[1], current.geo_json.coordinates[0]),
+          title: participantTitle(current),
+          map: map,
+          icon: {url: 'https://maps.google.com/mapfiles/kml/paddle/grn-blank.png', scaledSize: new google.maps.Size(30, 30)}
+        });
+        if (current.loc_accuracy > 6) {
+          //A circle representing the GPS accuracy is added
+          //and the circle is attached to the marker as a 
+          //property for future updates
+          addCircleToMarker(marker, current.loc_accuracy)
+          marker._circle = circle
+        }
+        currentMarkers[current.user_id] = marker;
+      }
+    }
+    window.setTimeout(getMarkers, INTERVAL);
+  });
+}
+
+//Builds PositionRequest objects for use with Google's Navigation API
+//and simultaneously populates the map bounds based on all the individual
+//locations i.e. start and end Positions, from each ride which is used
+//to set the map's zoom level after receiving all routes are rendered
+//on the map
 function buildRequestArrayAndBounds() {
   requestArray = []
   bounds = new google.maps.LatLngBounds();
@@ -181,19 +257,11 @@ function resetRenderArray() {
   renderArray = []
 }
 
-function listenForIdleAndCenter() {
-    google.maps.event.addListener(map, 'idle', function() {
-    if (bounds) {
-      map.fitBounds(bounds)
-    }
-    google.maps.event.clearListeners(map, 'idle')
-  })
-}
+// Core Request processing -- directionsResults is a callback function 
+//which populates the map with routes as the results are received. 
 
 function processRequests(){
   var current = 0;
-  
-  resetRenderArray();
   submitRequest();
 
   function submitRequest(){
@@ -219,36 +287,7 @@ function processRequests(){
   }
 }
 
-function getMarkers() {
-  $.get('/api/participants/' + partDistInput.value + '/meters_from/' + pos.lng + '/' + pos.lat + '/in_last/' + timeInput.value + '/minutes').then(function(data) {
-    resetCurrentMarkers();
-    for (var i = 0; i < data.length; i++) {
-      if(currentMarkers.hasOwnProperty(data[i].user_id)) {
-        currentMarkers[data[i].user_id].setPosition(new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]))
-        currentMarkers[data[i].user_id]._circle.radius = data[i].loc_accuracy
-        currentMarkers[data[i].user_id].title = participantTitle(data[i])
-      } else {
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]),
-          title: participantTitle(data[i]),
-          map: map,
-          icon: {url: 'http://maps.google.com/mapfiles/kml/paddle/grn-blank.png', scaledSize: new google.maps.Size(30, 30)}
-        });
-        if (data[i].loc_accuracy > 6) {
-          addCircleToMarker(marker, data[i].loc_accuracy)
-          marker._circle = circle
-        }
-        currentMarkers[data[i].user_id] = marker;
-      }
-    }
-    window.setTimeout(getMarkers, INTERVAL);
-  });
-}
-
-function participantTitle(participant) {
-  return "Participant " + participant.user_id + " on Route " + participant.route_id + " accurate to " + participant.loc_accuracy + " meters\nSeen " + participant.updated_at;
-}
-
+//Helpers for formatting API calls or other small functions
 function addCircleToMarker(marker, radius) {
   var thisCircle = new google.maps.Circle({
       map: map,
@@ -259,7 +298,7 @@ function addCircleToMarker(marker, radius) {
   circle = thisCircle
 }
 
-function resetCurrentMarkers() {
+function resetMarkerPosition() {
   $.each(currentMarkers, function(index, item) {
     item.setPosition(null)
   })
@@ -268,6 +307,18 @@ function resetCurrentMarkers() {
 function centerMap() {
   getLocation();
   map.panTo(pos)
+}
+
+function formatRouteApiCall(distance, lng, lat) {
+  return '/api/routes_within/' + distance + '/of/' + lng + '/' + lat
+}
+
+function formatParticipantApiCall(distance, lng, lat, time) {
+  return '/api/participants/' + distance + '/meters_from/' + lng + '/' + lat + '/in_last/' + time + '/minutes'
+}
+
+function participantTitle(participant) {
+  return "Participant " + participant.user_id + " on Route " + participant.route_id + " accurate to " + participant.loc_accuracy + " meters\nSeen " + participant.updated_at;
 }
 </script>
 
