@@ -110,7 +110,6 @@ function mapSuccess(position) {
     lat: position.coords.latitude,
     lng: position.coords.longitude
   };
-  newApiCall();
 }
 
 function mapError() {
