@@ -192,6 +192,7 @@ function processRequests(){
   function nextRequest(){
     current++;
     if(current >= requestArray.length){
+      map.setCenter(pos)
       return;
     }
     submitRequest();
@@ -215,7 +216,6 @@ function getMarkers() {
       }
     }
     window.setTimeout(getMarkers, INTERVAL);
-    map.setCenter(pos)
   });
 }
 
