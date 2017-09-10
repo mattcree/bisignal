@@ -35,6 +35,7 @@ defmodule BisignalWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/help", PageController, :help
     resources "/users", UserController, only: [:index, :new, :create, :delete, :show] do
       get "/participation", ParticipantController, :show_by_user
       get "/participation/:id", ParticipantController, :show

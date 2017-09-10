@@ -1,0 +1,38 @@
+<div id="error" class="panel panel-info">
+  <div class="panel-heading">
+    <h2>Using BiSignal</h2>
+    <p>Welcome to <i>BiSignal</i>! The purpose of this app for cyclists to be able to share their location information with other road users. The intention of this sharing, is to provide motorists with foreknowledge of cyclist activities, allowing them to factor these activities into their planned journeys.</p>
+  </div>
+  <div class="panel-body">
+
+  </div>
+  <div class="panel-footer">
+    
+  </div>
+</div>
+
+<div id="error" class="panel panel-info">
+  <div class="panel-heading">
+    <h2>Location Settings</h2>
+    <p><i>BiSignal</i> needs your Location information to display your whereabouts on the tracking map. Without your location, it's not possible to show your positions to other roads users. Information about supported browsers and how to enable Geolocation is provided below.</p>
+  </div>
+  <div class="panel-body">
+    <h3>Supported Browsers</h3>
+    <p>HTML5 Geolocation is supported in the following browsers:</p>
+    <ul>
+      <li>Firefox 3.5+</li>
+      <li>Chrome 5.0+</li>
+      <li>Safari 5.0+</li>
+      <li>Opera 10.60+</li>
+      <li>Internet Explorer 9.0+</li>
+    </ul>
+    <h3>How to Enable</h3>
+    <p>The following links explain how to enable Location sharing for your device:</p>
+    <ul>
+      <li><a href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DAndroid&hl=en">Chrome (Desktop, Android, and iPhone/iPad)</a></li>
+    </ul>
+  </div>
+  <div class="panel-footer">
+    
+  </div>
+</div>

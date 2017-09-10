@@ -28,18 +28,17 @@
           </button>
           <a class="navbar-brand">BiSignal</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
             <li><a href="<%= page_path @conn, :index %>">Track</a></li>
             <li><a href="<%= route_detail_path @conn, :index %>">View All Rides</a></li>
             <%= if @current_user do %>
             <li><a href="<%= user_participant_path @conn, :show_by_user, @current_user %>">Broadcast!</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings<span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="<%= user_path(@conn, :show, @current_user.id) %>">Manage Account</a></li>
-                  <li><%= link "Add New Ride", to: user_route_detail_path(@conn, :new, @current_user) %></li>
-
+                <li><a href="<%= user_path(@conn, :show, @current_user.id) %>">Account</a></li>
+                <li><%= link "Create New Ride", to: user_route_detail_path(@conn, :new, @current_user) %></li>
                 <li role="separator" class="divider"></li>
                 <li><%= link "Logout", to: session_path(@conn, :delete, @current_user), method: :delete %></li>
               </ul>
@@ -48,6 +47,7 @@
             <li><a href="<%= user_path @conn, :new %>">New user</a></li>
             <li><a href="<%= session_path @conn, :new %>">Login</a></li>
             <% end %>
+            <li><a href="<%= page_path @conn, :help %>">Help</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

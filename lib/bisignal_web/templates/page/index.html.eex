@@ -8,8 +8,9 @@
       <p>To see the Rides organised (Red A to Green B pointers on the map) which <strong>Start or End</strong> near you, select an option from <i>Show All Routes Within</i>.</p>
       <p>If you want to see the locations of Riders (green pointers on the map), configure the options under <i>Show All Riders Within</i> and <i>Rider's Last Location Update</i>. The distances selected are relative to the location of the blue pointer</p>
     </details>
+    <h5 id="locationMessage" style="display:none;">Location sharing disabled or not-available. Double click/tap the map to choose your location. More Info.</h5>
   </div>
-  <input type="button" id="center" onclick="centerMap()" value="Detect Location" class="controls centerButton"/>
+  <input type="button" id="center" onclick="centerMap()" value="Detect Location" class="controls centerButton btn"/>
   <div id="mapholder" style="height:30em;"></div>
   <div class="panel-footer" id="options">
     <div class="row text-center">
@@ -65,39 +66,13 @@
           <option value="360">6 hours</option>
           <option value="720">12 hours</option>
           <option value="1440">24 hours</option>
+          <option value="2880">2 days</option>
+          <option value="10080">7 days</option>
         </select>
       </div>
     </div>
   </div>
 </div>
-
-
-<div id="error" class="panel panel-info" style="display:none;">
-  <div class="panel-heading">
-    <h2>Location Required</h2>
-    <p><i>BiSignal</i> has detected that you have not shared your location with us. Without your location, it's not possible to show Rider positions. Information about supported browsers and how to enable Geolocation is provided below.</p>
-  </div>
-  <div class="panel-body">
-    <h3>Supported Browsers</h3>
-    <p>HTML5 Geolocation is supported in the following browsers:</p>
-    <ul>
-      <li>Firefox 3.5+</li>
-      <li>Chrome 5.0+</li>
-      <li>Safari 5.0+</li>
-      <li>Opera 10.60+</li>
-      <li>Internet Explorer 9.0+</li>
-    </ul>
-    <h3>How to Enable</h3>
-    <p>The following links explain how to enable Location sharing for your device:</p>
-    <ul>
-      <li><a href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DAndroid&hl=en">Chrome (Desktop, Android, and iPhone/iPad)</li>
-    </ul>
-  </div>
-  <div class="panel-footer">
-    
-  </div>
-</div>
-
 
 <script>
     //HERE ONLY FOR TESTING
@@ -113,6 +88,7 @@ var timeInput = document.getElementById('time');
 var mapHolder = document.getElementById('mapholder')
 var errorBox = document.getElementById('error')
 var centerButton = document.getElementById('center')
+var locationMsg = document.getElementById('locationMessage')
 var bounds;
 var map;
 var pos = {
@@ -149,12 +125,13 @@ function initMap() {
     } else {
       userMarker.setPosition(new google.maps.LatLng(pos.lat, pos.lng))
     }
-
-    console.log( pos );
   });
-
 }
 
+//Checks for the presence/availability of HTML5 Geolocation
+//the mapSuccess callback triggers when Geolocation is available
+//and the User allows location sharing. The mapError will trigger
+//if they choose not to share or the device/browser isn't compatible
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
@@ -178,14 +155,21 @@ function mapSuccess(position) {
   } else {
     userMarker.setPosition(new google.maps.LatLng(pos.lat, pos.lng))
   }
+  getMarkers();
   map.panTo(pos)
 }
 
 function mapError() {
-  document.getElementById('mapAndOptions').style.display = "none"
-  errorBox.style.display = ""
+  //document.getElementById('mapAndOptions').style.display = "none"
+  centerButton.style.display = "none"
+  locationMsg.style.display = ""
 }
 
+//API call to get all routes within a given distance. It produces multiple DisplayRenderer
+//objects, one for each route which is received from the API call. These routes are then
+//converted to PositionRequests for Google maps. When a previous API call has been made,
+//the existing DisplayRenderers are reset (i.e. their routes are removed) and the new
+//results are rendered
 function getRoutes() {
   $.get(formatRouteApiCall(distanceInput.value, pos.lng, pos.lat)).then(function(data) {
     if (data != []) {
@@ -207,7 +191,6 @@ function getRoutes() {
 //participants 
 function getMarkers() {
   $.get(formatParticipantApiCall(partDistInput.value, pos.lng, pos.lat, timeInput.value)).then(function(data) {
-    console.log("API CALL: " + formatParticipantApiCall(partDistInput.value, pos.lng, pos.lat, timeInput.value))
     resetMarkerPosition();
     for (var i = 0; i < data.length; i++) {
       current = data[i]
@@ -224,13 +207,11 @@ function getMarkers() {
           map: map,
           icon: {url: 'https://maps.google.com/mapfiles/kml/paddle/grn-blank.png', scaledSize: new google.maps.Size(30, 30)}
         });
-        if (current.loc_accuracy > 6) {
-          //A circle representing the GPS accuracy is added
-          //and the circle is attached to the marker as a 
-          //property for future updates
-          addCircleToMarker(marker, current.loc_accuracy)
-          marker._circle = circle
-        }
+        //A circle representing the GPS accuracy is added
+        //and the circle is attached to the marker as a 
+        //property for future updates
+        addCircleToMarker(marker, current.loc_accuracy)
+        marker._circle = circle
         currentMarkers[current.user_id] = marker;
       }
     }
@@ -260,29 +241,24 @@ function buildRequestArrayAndBounds() {
   }
 }
 
-function resetRenderArray() {
-  if(renderArray.length > 0){
-    for(var j=0; j < renderArray.length; j++){
-      if (renderArray[j] != null) {
-        renderArray[j].setMap(null);
-        renderArray[j] = null;
-      }
-    }
-  }
-  renderArray = []
-}
+
 
 // Core Request processing -- directionsResults is a callback function 
 //which populates the map with routes as the results are received. 
-
 function processRequests(){
   var current = 0;
   submitRequest();
 
+  //Submits the first request from the requestArray. When a result if received
+  //the directionResults callback is triggered
   function submitRequest(){
     directionsService.route(requestArray[current], directionResults);
   }
 
+  //Callback which receives a result and a status. If the Status
+  //is 'OK', a new DirectionsRenderer is created, has its map set
+  //as the main map, and the result param is set as the directions
+  //to display on the map
   function directionResults(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       renderArray[current] = new google.maps.DirectionsRenderer();
@@ -292,6 +268,9 @@ function processRequests(){
     nextRequest();
   }
 
+  //increases the count and checks if the end of the requestArray
+  //has been reached. If it has been reached, the function returns,
+  //otherwise the next request is submitted and the cycle repeats
   function nextRequest(){
     current++;
     if(current >= requestArray.length){
@@ -310,7 +289,18 @@ function addCircleToMarker(marker, radius) {
       fillColor: '#000080'
     });
   thisCircle.bindTo('center', marker, 'position');
-  circle = thisCircle
+}
+
+function resetRenderArray() {
+  if(renderArray.length > 0){
+    for(var j=0; j < renderArray.length; j++){
+      if (renderArray[j] != null) {
+        renderArray[j].setMap(null);
+        renderArray[j] = null;
+      }
+    }
+  }
+  renderArray = []
 }
 
 function resetMarkerPosition() {
