@@ -89,20 +89,17 @@ var pos = {
 function initMap() {
   map = new google.maps.Map(mapHolder, {
       mapTypeControl: false,
+      center: pos,
       zoom: 5
   });
 
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerButton);
   directionsService = new google.maps.DirectionsService();
-
-  getLocation();
 }
 
 function getLocation() {
   if (navigator.geolocation) {
-    if ($.cookie("position_longitude", undefined)) {
-      navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
-    }
+    navigator.geolocation.getCurrentPosition(mapSuccess, mapError);
   } else {
     mapError();
   }
@@ -113,12 +110,6 @@ function mapSuccess(position) {
     lat: position.coords.latitude,
     lng: position.coords.longitude
   };
-
-  $.cookie("position_latitude", position.coords.latitude);
-  $.cookie("position_longitude", position.coords.longitude);
-  document.location.reload(true);
-
-
   newApiCall();
 }
 
@@ -237,6 +228,7 @@ function resetCurrentMarkers() {
 }
 
 function centerMap() {
+  getLocation();
   map.panTo(pos)
 }
 </script>
