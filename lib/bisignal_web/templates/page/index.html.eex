@@ -114,6 +114,7 @@ function mapSuccess(position) {
     lat: position.coords.latitude,
     lng: position.coords.longitude
   };
+  location.reload();
   newApiCall();
 }
 
