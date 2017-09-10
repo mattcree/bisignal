@@ -207,6 +207,7 @@ function getMarkers() {
     for (var i = 0; i < data.length; i++) {
       if(currentMarkers.hasOwnProperty(data[i].user_id)) {
         currentMarkers[data[i].user_id].setPosition(new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]))
+        currentMarkers[data[i].user_id]._circle.radius = data[i].loc_accuracy
       } else {
         var marker = new google.maps.Marker({
           position: new google.maps.LatLng(data[i].geo_json.coordinates[1], data[i].geo_json.coordinates[0]),
@@ -216,6 +217,7 @@ function getMarkers() {
         });
         if (data[i].loc_accuracy > 6) {
           addCircleToMarker(marker, data[i].loc_accuracy)
+          marker._circle = circle
         }
         currentMarkers[data[i].user_id] = marker;
       }
