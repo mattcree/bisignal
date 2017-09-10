@@ -89,9 +89,9 @@ function initMap() {
       zoom: 5
   });
 
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(distanceInput);
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(partDistInput);
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(timeInput);
+  //map.controls[google.maps.ControlPosition.TOP_CENTER].push(distanceInput);
+  //map.controls[google.maps.ControlPosition.TOP_CENTER].push(partDistInput);
+  //map.controls[google.maps.ControlPosition.TOP_CENTER].push(timeInput);
 
   directionsService = new google.maps.DirectionsService();
 }
