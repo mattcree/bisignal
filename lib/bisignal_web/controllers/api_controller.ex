@@ -112,11 +112,11 @@ defmodule BisignalWeb.ApiController do
     end
   end
 
+  # Validation of longitude and latitude values
   def scrub_lng_lat(lng, lat) do
     {longitude, valid_long} = parse_coord(lng, &is_within_range/3, -180.0, 180.0)
     {latitude, valid_lat} = parse_coord(lat, &is_within_range/3, -90.0, 90.0)
     if (valid_long == true and valid_lat == true) do
-      IO.inspect {longitude, latitude}
       {longitude, latitude}
     else
       :error
@@ -127,6 +127,8 @@ defmodule BisignalWeb.ApiController do
     case Float.parse(coord) do
       {coord, ""} ->
         {coord, validate.(coord, lower, upper)}
+      {_, _} ->
+        {0, false}
       :error ->
         {0, false}
     end

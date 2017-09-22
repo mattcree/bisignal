@@ -20,8 +20,6 @@
       <td><%= route_detail.start_name %></td>
       <td><%= route_detail.end_name %></td>
       <td><%= route_detail.datetime %></td>
-
-
       <td class="text-right">
         <span><%= link "Show", to: user_route_detail_path(@conn, :user_show, @user, route_detail), class: "btn btn-default btn-xs" %></span>
       </td>

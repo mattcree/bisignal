@@ -20,14 +20,10 @@
               <% end %>
             <% end %>
           </h4>
-
         </div>
       </div>
     </div>
-
-    
   </div>
-
   <div class="panel-body">
     <p>A trip between <%= @route_detail.start_name %> and <%= @route_detail.end_name %>.</p>
     <div id="map" style="height:30em"></div>
@@ -56,25 +52,14 @@
     </div>
     <div class="col-md-2"></div>
   </div>
-
-
-
   </div>
-
 </div>
-
-
-
-
-  <div id="coords" 
-    data-start="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>"
-    data-end="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" 
-  />
+<div id="coords" 
+  data-start="<%= Geo.JSON.encode(@route_detail.start) |> Poison.encode! %>"
+  data-end="<%= Geo.JSON.encode(@route_detail.end) |> Poison.encode! %>" 
+/>
 
 <script src='<%= static_path(@conn, "/js/displayroute.js") %>'></script>
-
-
-
 
 <script>
   // here for testing only
@@ -115,8 +100,6 @@
             }
         });
     }
-
-
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"

@@ -96,6 +96,7 @@ var pos = {
   lng: -6.042480
 }
 var userMarker;
+var refresh = false;
 
 
 function initMap() {
@@ -126,6 +127,7 @@ function initMap() {
       userMarker.setPosition(new google.maps.LatLng(pos.lat, pos.lng))
     }
   });
+  refresh = window.setInterval(getMarkers, INTERVAL);
 }
 
 //Checks for the presence/availability of HTML5 Geolocation
@@ -211,11 +213,9 @@ function getMarkers() {
         //and the circle is attached to the marker as a 
         //property for future updates
         addCircleToMarker(marker, current.loc_accuracy)
-        marker._circle = circle
         currentMarkers[current.user_id] = marker;
       }
     }
-    window.setTimeout(getMarkers, INTERVAL);
   });
 }
 
@@ -289,11 +289,12 @@ function addCircleToMarker(marker, radius) {
       fillColor: '#000080'
     });
   thisCircle.bindTo('center', marker, 'position');
+  marker._circle = thisCircle
 }
 
 function resetRenderArray() {
   if(renderArray.length > 0){
-    for(var j=0; j < renderArray.length; j++){
+    for(var j = 0; j < renderArray.length; j++){
       if (renderArray[j] != null) {
         renderArray[j].setMap(null);
         renderArray[j] = null;
@@ -305,6 +306,7 @@ function resetRenderArray() {
 
 function resetMarkerPosition() {
   $.each(currentMarkers, function(index, item) {
+    console.log("wot")
     item.setPosition(null)
   })
 }

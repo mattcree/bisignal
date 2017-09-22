@@ -22,8 +22,6 @@
  </div>
 </div>
 
-
-
 <script>
   window.participant_id = "<%= @participant.id %>";
 </script>

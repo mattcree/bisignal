@@ -88,6 +88,8 @@ function initMap() {
  /**
   * @constructor
  */
+ // Based on the Place Autocomplete Example from Google Maps JavaScript API
+ // https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions
 function AutocompleteDirectionsHandler(map) {
   this.map = map;
   this.originPlaceId = null;
@@ -158,11 +160,13 @@ var saveRoute = function (directionsDisplay) {
     if(!route_legs) {
       return
     }
+    //creating GeoJSON start and end points
     route.start = {'type': 'Point', 'coordinates': [route_legs.start_location.lng(), route_legs.start_location.lat()]}
     route.end = {'type': 'Point', 'coordinates': [route_legs.end_location.lng(), route_legs.end_location.lat()]}
     var via = route_legs.via_waypoints 
 
-    for(var i=0;i<via.length;i++) {
+    //not used
+    for(var i = 0; i < via.length; i++) {
       final_waypoints[''+i+''] = {'type': 'Point', 'coordinates': [via[i].lng(), via[i].lat()]}
     }
 
@@ -170,6 +174,7 @@ var saveRoute = function (directionsDisplay) {
     start_name.value = originInput.value
     end_name.value = destinationInput.value
     
+    //binding GeoJSON to hidden input fields
     waypoints.value = JSON.stringify(route.waypoints)
     start.value = JSON.stringify(route.start)
     end.value = JSON.stringify(route.end)
@@ -177,8 +182,8 @@ var saveRoute = function (directionsDisplay) {
 
 </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
-        async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZb6It08HrypHnxdYwZenAUtnlsitIOes&libraries=places&callback=initMap"
+    async defer></script>
 
 
 

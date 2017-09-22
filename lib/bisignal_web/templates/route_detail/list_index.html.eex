@@ -51,14 +51,10 @@
                 <span><%= link "View All Ride Info", to: route_detail_path(@conn, :show, route_detail), class: "btn btn-info btn-block" %></span>
               </div>
             </div>
-
-
-              
             </div>
           </div>
       <% end %>
     <% end %>
-
   </div>
   <div class="panel-footer">
     <div class="row text-center"> 
